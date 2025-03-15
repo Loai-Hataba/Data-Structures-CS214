@@ -7,37 +7,51 @@ class Guest
     // Attributes :
     string name;       // name of the guest
     string contact;    // the phone or email
-    string iftar_date; // the date they'r invited
+    string iftar_date; // the date they're invited
+
+    
+
 public:
     // Methods :
+    // Empty constructor ( for the list of  guests actually )
     Guest()
     {
         this->name = "";
         this->contact = "";
         this->iftar_date = "";
     }
-    Guest(const string & name, const string & contact, const string & iftar_date)
+    // Parametrized constructor
+    Guest(const string &name, const string &contact, const string &iftar_date)
     {
         this->name = name;
         this->contact = contact;
         this->iftar_date = iftar_date;
     }
-
+    // function to display the guest information
     void display_guest()
     {
         cout << "Guest : " << this->name << ","
              << "Contact : " << this->contact << ","
              << "Iftar date : " << this->iftar_date << endl;
     }
-    void update_invitation(const string & new_date)
+    // function to update the guest invitation date
+    void update_invitation(const string &new_date)
     {
         this->iftar_date = new_date;
     }
-    string getGuestName ( ) {
-        return this->name ;
+    // Getter for the name
+    string getGuestName()
+    {
+        return this->name;
     }
-    string getGuestDate () {
-        return this->iftar_date ;
+    // getter for the date
+    string getGuestDate()
+    {
+        return this->iftar_date;
+    }
+
+    bool operator > (const Guest & guest ){
+
     }
 };
 
@@ -48,6 +62,7 @@ class IftarManger
     Guest *guest_list;
     int size;
     int capacity;
+    // function to resize the list when the capacity equals to the size (for adding new guests)
     void resize(const int &new_cap)
     {
         auto *temp = new Guest[new_cap];
@@ -61,18 +76,19 @@ class IftarManger
     }
 
 public:
-    IftarManger () {
+    // empty constructor
+    IftarManger()
+    {
         this->size = 0;
-        this->capacity = 2;
+        this->capacity = 4;
         guest_list = new Guest[this->capacity];
-
     }
     // function to add a new guest
     void add_guest(const Guest &guest)
     {
         if (size == capacity)
-        {
-            resize(capacity * 2);
+        { 
+            resize(capacity + 2 );
         }
         guest_list[size] = guest;
         size++;
@@ -82,6 +98,7 @@ public:
     {
         for (size_t i = 0; i < size; i++)
         {
+            // using the display method in the guest class 
             guest_list[i].display_guest();
         }
     }
@@ -90,13 +107,14 @@ public:
     {
         for (size_t i = 0; i < size; i++)
         {
-            if (guest_list[i] . getGuestName() == name )
+            if (guest_list[i].getGuestName() == name)
             {
-                cout << endl<<"Updating invitation for " << guest_list[i].getGuestName() << "..."<< endl <<endl;
+                cout << endl
+                     << "Updating invitation for " << guest_list[i].getGuestName() << "..." << endl
+                     << endl;
                 guest_list[i].update_invitation(new_date);
-                break ;
+                break;
             }
-
         }
     }
     // function to send a notification (Sends a reminder message to all guests on a specific dateby email.)
@@ -106,21 +124,19 @@ public:
     // Function to sort the guest list by invitation date
     void sort_guest_list()
     {
-        // using insertion sort because it better for this type of lists
-        string key  ;
-        int j = 0 ;
-        for (size_t i = 1; i < size  ; i++)
+        for (int i = 1; i < size; i++)
         {
-            key = guest_list[i].getGuestDate();
-            j = i - 1 ;
+            Guest key = guest_list[i];
+            int j = i - 1;
 
-            while (j>=0 && key < guest_list[j].getGuestDate())
+            // Move elements of guest_list[0..i-1], that are greater than key,
+            // to one position ahead of their current position
+            while (j >= 0 && guest_list[j].getGuestDate() > key.getGuestDate())
             {
-                guest_list[j+1] = guest_list[j];
-                j--;
+                guest_list[j + 1] = guest_list[j];
+                j = j - 1;
             }
-            // we have found the correct position for the key
-            guest_list[j + 1].getGuestDate() =key ;
+            guest_list[j + 1] = key;
         }
     }
 };
@@ -132,6 +148,7 @@ int main()
     Guest guest1("Aisha", "aisha@example.com", "2025-03-15");
     Guest guest2("Omar", "omar@example.com", "2025-03-18");
     Guest guest3("Zainab", "zainab@example.com", "2025-03-20");
+    // cout << "This great : " << (guest3 > guest2) << endl;
     manager.add_guest(guest1);
     manager.add_guest(guest2);
     manager.add_guest(guest3);
@@ -147,3 +164,20 @@ int main()
     return 0;
 }
 
+/**
+ * The Guest Class :
+ * 1- attributes :
+ * a- name  , b-contact , c- iftar_date ==>> all are strings
+ *
+ * 2- Methods :
+ * a- display_guest() void      , b-update_invitation (new_date) void
+ * c- getter for date , getter for name
+ *
+ * 2 - iftar manager class:
+ *
+ * 1- attribuites :
+ *
+ * a- guest_list (list) , b - add_guest (guest) void , c- display_all_guests()void ,
+ * d -update_guest_invitation (name , new_date ) , e- send_reminder (date)==>> sends a reminder message to all guests on specific date by email
+ * f- sort_guest_list() void
+ */

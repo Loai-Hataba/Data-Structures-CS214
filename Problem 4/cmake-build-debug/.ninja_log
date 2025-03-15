@@ -1,0 +1,5 @@
+# ninja log v6
+13	473	7637002165455695	CMakeFiles/Problem_4.dir/main.cpp.obj	432815f5d47895b
+17	379	7636966546534862	CMakeFiles/Problem_4.dir/SortingSystem.cpp.obj	ed36bce9c8752437
+473	594	7637002170051639	Problem_4.exe	d5361117a866bb2e
+2	284	7637004039457744	build.ninja	a6b2ec4e48accb1b
