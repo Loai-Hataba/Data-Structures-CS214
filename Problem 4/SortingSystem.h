@@ -191,6 +191,48 @@ void SortingSystem<T>::mergeSort(int left, int right)
 }
 
 template<typename T>
+void SortingSystem<T>::countSort() {
+
+    // First find the max number :
+    int max = data[0];
+    for (int i = 1; i < size ; i++) {
+        if (data[i] > max) {
+            max = data[i];
+        }
+    }
+    ++max ;
+    // then making an array to store the occurrences of each number
+    int *countArray = new int[max ] ;
+    // Initialize it to be of zeros
+    for (int i = 0; i < max ; i++) {
+        countArray[i] = 0 ;
+    }
+    // then count occurrences :
+    for (int i = 0; i < size; i++) {
+        countArray[ data[i] ]  += 1  ;
+    }
+    // then convert the count array to a cumulative one :
+    for (int i = 1; i < max  ; i++) {
+        countArray[i] += countArray[i-1] ;
+    }
+    // the sorted array :
+    int *sorted = new int[size] ;
+    for (int i = size - 1 ; i >=0 ; i--) {
+        sorted[countArray[data[i]] - 1 ] = data[i];
+        countArray[data[i]] -- ;
+    }
+    //finally copying the elements to the data var :
+    for (int i = 0; i < size; i++) {
+        data[i] = sorted[i];
+    }
+    delete[] sorted ;
+    delete[] countArray;
+    countArray = nullptr;
+    sorted = nullptr ;
+
+}
+
+template<typename T>
 void SortingSystem<T>::displayData() {
     for (size_t j = 0; j < size  ; j++) {
         if ( j != size - 1 ) {
