@@ -30,6 +30,7 @@ public:
     void mergeSort(int left, int right);
     void quickSort(int left, int right);
     void countSort();
+    void countSort(const int & bit );// helper function for the radix sort
     void radixSort();
     void bucketSort();
 
@@ -230,6 +231,53 @@ void SortingSystem<T>::countSort() {
     countArray = nullptr;
     sorted = nullptr ;
 
+}
+
+template<typename T>
+void SortingSystem<T>::countSort(const int &bit) {
+    const int digitsRange = 10 ;
+    int count [digitsRange]  ={ 0 }; // the array that we will count number of occurrences in it
+    int * output = new int [this->size ] ;//The sorted array
+    // count number of occurrences :
+    for (int i = 0; i < this->size ; i++) {
+
+        // extract the digit :
+        int digit = (data[i] /bit ) % 10;
+         ++count[ digit ] ;
+    }
+    // convert the count array to cumulative one :
+    for (int i = 1 ; i < digitsRange; i++) {
+        count [i] += count [i -1 ] ;
+    }
+    //Sort the elements from the left :
+    for (int i = this->size -  1  ; i >=0 ; i--) {
+        int digit = (data[i] /bit ) % 10;
+        output [count [ digit ] - 1 ] = data[i];
+        --count [digit ] ;
+    }
+    // copy the elements to the data array :
+    for (int i = 0; i < this->size ; i++) {
+        data[i] = output [i];
+
+    }
+    delete[] output ;
+    output = nullptr ;
+
+}
+
+template<typename T>
+void SortingSystem<T>::radixSort() {
+    // find the max ele :
+    int max = data[0];
+    for (int i = 1; i < this->size ; i++) {
+        if (data[i] > max) {
+            max = data[i];
+        }
+    }
+    // Doing count sort from the LSB :
+    for (int i = 1 ;  max / i > 0 ; i *= 10) {
+        countSort(i) ;
+    }
 }
 
 template<typename T>

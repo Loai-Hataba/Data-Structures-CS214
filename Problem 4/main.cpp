@@ -10,6 +10,6 @@ int main () {
     cout << "Welcome to Sorting System app " <<endl <<endl ;
 
     SortingSystem<int> s (7) ;
-    s.countSort() ;
+    s.radixSort() ;
     return 0;
 }
