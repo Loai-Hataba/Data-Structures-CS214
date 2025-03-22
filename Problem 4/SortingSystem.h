@@ -13,12 +13,8 @@ using namespace std;
 template <typename T>
 class SortingSystem
 {
-private:
     T *data;  // Dynamic array for storing input data
     int size; // Size of the array
-    void merge(int left, int mid, int right); // Merge sort helper
-    int partition(int low, int high);         // Quick sort helper
-    void displayIteratedData (const int & i  ) ;
 
 public:
     SortingSystem(const int & n);  // Constructor
@@ -27,44 +23,31 @@ public:
     void selectionSort();
     void bubbleSort();
     void shellSort();
-    void mergeSort(int left, int right);
-    void quickSort(int left, int right);
+    void mergeSort(const int & left,const  int &  right);
+    void quickSort(const int &  left,const int& right);
     void countSort();
     void countSort(const int & bit );// helper function for the radix sort
     void radixSort();
     void bucketSort();
-
+    
+    void merge(const int &  left, const int&  mid,const  int&  right); // Merge sort helper
+    int partition(const int &  low, const int & high);         // Quick sort helper
 
 
 
     void displayData(); // Print the current state of the array
 
-    // Optional: Measure sorting time for performance analysis
-    // void measureSortTime(void (*sortFunction)());
+    void measureSortTime(void (*sortFunction)());
 
     void showMenu(); // Display menu for user interaction
 };
 
-//! May be removed
-template<typename T>
-void SortingSystem<T>::displayIteratedData(const int &   i ) {
-    cout << "Iteration " << i << " : [ "  ;
-    for (size_t j = 0; j < size  ; j++) {
-        if ( j != size - 1 ) {
-            cout << data[ j ] << ", ";
-        }
-        else {
-            cout << data[ j ];
-        }
-    }
-    cout << " ]" << endl;
-}
 
 template<typename T>
 SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
-    int arr[] = {20, 80 , 30, 10 , 100, 20, 5 } ;
+    string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -104,14 +87,16 @@ void SortingSystem<T>::bubbleSort()
                 {
                     isSorted = false ;
                 }
-
             }
         }
         if (isSorted){
+            cout << "The data is already sorted " << endl;
+            cout << "Pass " << i + 1 << " : ";
+            displayData() ;
             break ;
         }
-
-        displayIteratedData(i + 1 ) ;
+        cout << "Pass " << i + 1 << " : ";
+        displayData() ;
     }
 
 }
@@ -119,7 +104,7 @@ void SortingSystem<T>::bubbleSort()
 // Merge sort algorithm :
 
 template <typename T>
-void SortingSystem<T>::merge(int left, int mid, int right)
+void SortingSystem<T>::merge(const int &  left, const int&  mid,const  int&  right)
 {
     int n1 = mid - left + 1 ;
     int n2 = right - mid ;
@@ -178,16 +163,16 @@ void SortingSystem<T>::merge(int left, int mid, int right)
 
 
 template <typename T>
-void SortingSystem<T>::mergeSort(int left, int right)
+void SortingSystem<T>::mergeSort(const int &  left,const int&  right)
 {
     static int iteration = 0 ;
     if(left < right ) {
-
-        int middle =  left + (right- left ) / 2 ;
+        int middle = left + (right - left) / 2;
         mergeSort(left , middle) ;
         mergeSort(middle + 1 , right ) ;
         merge (left ,middle ,right ) ;
-        displayIteratedData( ++iteration ) ;
+        cout <<"Iteration "<< ++iteration << " : " ;
+        displayData() ;
     }
 }
 
@@ -203,7 +188,7 @@ void SortingSystem<T>::countSort() {
     }
     ++max ;
     // then making an array to store the occurrences of each number
-    int *countArray = new int[max ] ;
+    auto *countArray = new int[max ] ;
     // Initialize it to be of zeros
     for (int i = 0; i < max ; i++) {
         countArray[i] = 0 ;
@@ -217,10 +202,10 @@ void SortingSystem<T>::countSort() {
         countArray[i] += countArray[i-1] ;
     }
     // the sorted array :
-    int *sorted = new int[size] ;
+    auto sorted = new int[size] ;
     for (int i = size - 1 ; i >=0 ; i--) {
         sorted[countArray[data[i]] - 1 ] = data[i];
-        countArray[data[i]] -- ;
+        --countArray[data[i]]  ;
     }
     //finally copying the elements to the data var :
     for (int i = 0; i < size; i++) {
@@ -229,7 +214,7 @@ void SortingSystem<T>::countSort() {
     delete[] sorted ;
     delete[] countArray;
     countArray = nullptr;
-    sorted = nullptr ;
+    sorted = nullptr;
 
 }
 
@@ -282,6 +267,7 @@ void SortingSystem<T>::radixSort() {
 
 template<typename T>
 void SortingSystem<T>::displayData() {
+    cout << " [ " ;
     for (size_t j = 0; j < size  ; j++) {
         if ( j != size - 1 ) {
             cout << data[ j ] << ", ";
