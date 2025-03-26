@@ -5,19 +5,24 @@ using namespace std;
 //    bool first = true;
 //    for (int i = size-1; i >= 0; --i) {
 //        if (poly[i] != 0) {
-//            if (!first || i != 0) {
+//            if (!first) {
 //                if (poly[i] > 0) {
 //                    cout << " + ";
-//                } else cout << " - ";
+//                }
+//                else if (poly[i] < 0) cout << " - ";
 //            }
-//            else if (poly[i] < 0)cout<<'-';
-//            if (i == 0) cout<<" = ";
-//            if (abs(poly[i]) > 1 && i != 0) {
-//                cout << abs(poly[i]);
+//            else if(poly[i] < 0)cout<<'-';
+//
+//            if(i == 0){
+//                cout<<" = "<<poly[i];
 //            }
-//            else cout<<'x';
-//            if ()
-//            if (i - 2 > 1)cout<<'^'<<i-2;
+//            else if (abs(poly[i] > 1)){
+//                cout<<abs(poly[i])<<'x';
+//            }
+//            else cout<< 'x';
+//
+//            if(i - 2 > 1)cout<<'^'<<i-2;
+//
 //        }
 //        first = false;
 //    }
