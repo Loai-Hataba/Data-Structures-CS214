@@ -24,7 +24,9 @@ public:
     void bubbleSort();
     void shellSort();
     void mergeSort(const int & left,const  int &  right);
+    void mergeSort () ;// for the measure function
     void quickSort(const int &  left,const int& right);
+    void quickSort () ;// for the measure function
     void countSort();
     void countSort(const int & bit );// helper function for the radix sort
     void radixSort();
@@ -48,7 +50,7 @@ SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
     //string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    int arr [ ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 100 , 50 } ;
+    int arr [15 ] = {10 , -2 , 8 , 4 ,1 ,-20 , 13 , -100 , 50 ,100, 1000 , 999 , 998 , -997 , 9   } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -175,53 +177,60 @@ void SortingSystem<T>::mergeSort(const int &  left,const int&  right)
 }
 
 template<typename T>
+void SortingSystem<T>::mergeSort() {
+    mergeSort(0 , size - 1);
+}
+
+template<typename T>
+void SortingSystem<T>::quickSort() {
+    quickSort(0 , size - 1);
+}
+
+template<typename T>
 void SortingSystem<T>::countSort() {
 
     // First find the max number :
     int max = data[0];
+    int min = data[0] ;
     for (int i = 1; i < size ; i++) {
         if (data[i] > max) {
             max = data[i];
         }
+        if (data[i] < min) {
+            min = data[i];
+        }
     }
-    ++max ;
     // then making an array to store the occurrences of each number
-    auto *countArray = new int[max ] ;
-    // Initialize it to be of zeros
-    for (int i = 0; i < max ; i++) {
-        countArray[i] = 0 ;
-    }
+    const int range = max - min + 1 ;
+    int *countArray = new int[range ] {0}  ;
     // then count occurrences :
     for (int i = 0; i < size; i++) {
-        countArray[ data[i] ]  += 1   ;
+       ++ countArray[ data[i] - min  ]    ;
     }
-    // cout << "The Count array : " <<endl  ;
-    // for (int i = 0; i < max ; i++) {
-    //   cout << countArray[i] << " " ;
-    // }
-    cout << endl;
     // then convert the count array to a cumulative one :
-    for (int i = 1; i < max  ; i++) {
+    for (int i = 1; i < range  ; i++) {
         countArray[i] += countArray[i-1] ;
     }
-    // cout << "The cumulative array :  " << endl ;
-    // for (int i = 0; i < max ; i++) {
-    //     cout << countArray[i] << " " ;
-    // }
-
-    cout << endl;
     // the sorted array :
-    auto sorted = new int[size] ;
+    int * sorted = new int[size]{0} ;
     for (int i = size - 1 ; i >=0 ; i--) {
-        sorted[countArray[data[i]] - 1 ] = data[i];
-        --countArray[data[i]]  ;
+        // the algorithm
+        sorted[countArray[data[i] - min] - 1 ] = data[i];
+        --countArray[data[i] -min ]  ;
+        // For displaying the iterations
+        // Printing the sorted array after every iteration
+        cout << "Iteration # " << (size - i)  << " : [ ";
+        for (int i = 0; i < size; i++) {
+            if (i != size - 1)
+                cout << sorted[i] << ", ";
+            else
+                cout << sorted[i] << " ]" << endl;
+        }
     }
     //finally copying the elements to the data var :
     for (int i = 0; i < size; i++) {
         data[i] = sorted[i];
     }
-    cout << "The sorted array : ";
-    this->displayData();
     delete[] sorted ;
     delete[] countArray;
 
