@@ -9,7 +9,7 @@ using namespace  std ;
 int main () {
     cout << "Welcome to Sorting System app " <<endl <<endl ;
 
-    SortingSystem<string> s (9) ;
-    s.bubbleSort() ;
+    SortingSystem<int> s (9) ;
+    s.measureSortTime(&SortingSystem<int> :: countSort) ;
     return 0;
 }

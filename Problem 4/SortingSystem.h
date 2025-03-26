@@ -5,8 +5,8 @@
 #ifndef SORTINGSYSTEM_H
 #define SORTINGSYSTEM_H
 
+#include <chrono>
 #include <iostream>
-#include <xmmintrin.h>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
 
     void displayData(); // Print the current state of the array
 
-    void measureSortTime(void (*sortFunction)());
+    void measureSortTime(void (SortingSystem :: *sortFunc)());
 
     void showMenu(); // Display menu for user interaction
 };
@@ -47,20 +47,18 @@ template<typename T>
 SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
-    string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
+    //string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
+    int arr [ ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 100 , 50 } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
+
 }
 
 template<typename T>
 SortingSystem<T>::~SortingSystem() {
-    for (int i = 0; i < size; i++) {
-        cout << data[i] << " ";
-    }
-    cout << endl;
     delete[] data;
-    data = nullptr; // Avoid dangling pointer
+    data = nullptr;
 }
 
 
@@ -195,12 +193,23 @@ void SortingSystem<T>::countSort() {
     }
     // then count occurrences :
     for (int i = 0; i < size; i++) {
-        countArray[ data[i] ]  += 1  ;
+        countArray[ data[i] ]  += 1   ;
     }
+    // cout << "The Count array : " <<endl  ;
+    // for (int i = 0; i < max ; i++) {
+    //   cout << countArray[i] << " " ;
+    // }
+    cout << endl;
     // then convert the count array to a cumulative one :
     for (int i = 1; i < max  ; i++) {
         countArray[i] += countArray[i-1] ;
     }
+    // cout << "The cumulative array :  " << endl ;
+    // for (int i = 0; i < max ; i++) {
+    //     cout << countArray[i] << " " ;
+    // }
+
+    cout << endl;
     // the sorted array :
     auto sorted = new int[size] ;
     for (int i = size - 1 ; i >=0 ; i--) {
@@ -211,10 +220,10 @@ void SortingSystem<T>::countSort() {
     for (int i = 0; i < size; i++) {
         data[i] = sorted[i];
     }
+    cout << "The sorted array : ";
+    this->displayData();
     delete[] sorted ;
     delete[] countArray;
-    countArray = nullptr;
-    sorted = nullptr;
 
 }
 
@@ -235,7 +244,7 @@ void SortingSystem<T>::countSort(const int &bit) {
         count [i] += count [i -1 ] ;
     }
     //Sort the elements from the left :
-    for (int i = this->size -  1  ; i >=0 ; i--) {
+    for (int i = this->size -  1  ; i >=0 ; --i) {
         int digit = (data[i] /bit ) % 10;
         output [count [ digit ] - 1 ] = data[i];
         --count [digit ] ;
@@ -246,7 +255,6 @@ void SortingSystem<T>::countSort(const int &bit) {
 
     }
     delete[] output ;
-    output = nullptr ;
 
 }
 
@@ -277,6 +285,16 @@ void SortingSystem<T>::displayData() {
         }
     }
     cout << " ]" << endl;
+}
+
+template<typename T>
+void SortingSystem<T>::measureSortTime(void(SortingSystem::*sortFunc)()) {
+    const clock_t start = clock() ; //Wall time in windows
+    (this->*sortFunc)();
+    const clock_t end = clock() ;
+    const double elapsed = static_cast<double>(end - start)/ CLOCKS_PER_SEC ;
+    cout << "Sorting Time : "<< elapsed << " seconds" << endl;
+
 }
 
 template<typename T>

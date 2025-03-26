@@ -131,8 +131,8 @@ public:
             if (guest_list[i].getGuestName() == name)
             {
                 cout << endl
-                    << "Updating invitation for " << guest_list[i].getGuestName() << "..." << endl
-                    << endl;
+                     << "Updating invitation for " << guest_list[i].getGuestName() << "..." << endl
+                     << endl;
                 guest_list[i].update_invitation(new_date);
                 break;
             }
@@ -148,7 +148,7 @@ public:
             if (guest.getGuestDate() == date)
             {
                 cout << "Reminder sent to " << guest.getGuestName() << ": Your Iftar invitation is on "
-                    << guest.getGuestDate() << endl;
+                     << guest.getGuestDate() << endl;
             }
         }
     }
@@ -160,7 +160,7 @@ public:
         {
             key = guest_list[i];
             int j = i - 1;
-            while (j >= 0 && ( guest_list[j] > key ) )
+            while (j >= 0 && (guest_list[j] > key))
             {
                 guest_list[j + 1] = guest_list[j];
                 j = j - 1;
@@ -177,7 +177,7 @@ int main()
     Guest guest1("Aisha", "aisha@example.com", "2025-03-15");
     Guest guest2("Omar", "omar@example.com", "2025-03-18");
     Guest guest3("Zainab", "zainab@example.com", "2025-03-20");
-    
+
     manager.add_guest(guest1);
     manager.add_guest(guest2);
     manager.add_guest(guest3);

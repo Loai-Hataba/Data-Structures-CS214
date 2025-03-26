@@ -1,3 +1,3 @@
-G:/Data-Structures-CS214/Problem 4/cmake-build-debug/CMakeFiles/Problem_4.dir
-G:/Data-Structures-CS214/Problem 4/cmake-build-debug/CMakeFiles/edit_cache.dir
-G:/Data-Structures-CS214/Problem 4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Problem 4/cmake-build-debug/CMakeFiles/Problem_4.dir
+G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Problem 4/cmake-build-debug/CMakeFiles/edit_cache.dir
+G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Problem 4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
