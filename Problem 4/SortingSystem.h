@@ -216,10 +216,10 @@ void SortingSystem<T>::countSort() {
     for (int i = size - 1 ; i >=0 ; i--) {
         // the algorithm
         sorted[countArray[data[i] - min] - 1 ] = data[i];
-        --countArray[data[i] -min ]  ;
+        --countArray[data[i] - min ]  ;
         // For displaying the iterations
         // Printing the sorted array after every iteration
-        cout << "Iteration # " << (size - i)  << " : [ ";
+        cout << "Iteration # " << size - i  << " : [ ";
         for (int i = 0; i < size; i++) {
             if (i != size - 1)
                 cout << sorted[i] << ", ";
@@ -238,14 +238,14 @@ void SortingSystem<T>::countSort() {
 
 template<typename T>
 void SortingSystem<T>::countSort(const int &bit) {
-    const int digitsRange = 10 ;
+    const int digitsRange = 19  ; //from -9 to 9
     int count [digitsRange]  ={ 0 }; // the array that we will count number of occurrences in it
     int * output = new int [this->size ] ;//The sorted array
     // count number of occurrences :
     for (int i = 0; i < this->size ; i++) {
 
         // extract the digit :
-        int digit = (data[i] /bit ) % 10;
+        int digit = (data[i] /bit ) % 10 +9 ;
          ++count[ digit ] ;
     }
     // convert the count array to cumulative one :
@@ -254,13 +254,15 @@ void SortingSystem<T>::countSort(const int &bit) {
     }
     //Sort the elements from the left :
     for (int i = this->size -  1  ; i >=0 ; --i) {
-        int digit = (data[i] /bit ) % 10;
+        int digit = (data[i] /bit ) % 10 + 9;
         output [count [ digit ] - 1 ] = data[i];
         --count [digit ] ;
     }
     // copy the elements to the data array :
+
     for (int i = 0; i < this->size ; i++) {
         data[i] = output [i];
+
 
     }
     delete[] output ;
@@ -272,13 +274,15 @@ void SortingSystem<T>::radixSort() {
     // find the max ele :
     int max = data[0];
     for (int i = 1; i < this->size ; i++) {
-        if (data[i] > max) {
+        if (abs(data[i]) > max) {
             max = data[i];
         }
     }
     // Doing count sort from the LSB :
     for (int i = 1 ;  max / i > 0 ; i *= 10) {
+       cout << "Applying count sort on the " << i << " 's digit : " <<endl; ;
         countSort(i) ;
+        this->displayData() ;
     }
 }
 
