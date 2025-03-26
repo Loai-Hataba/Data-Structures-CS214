@@ -1,7 +1,3 @@
-//
-// Created by abdal on 15/03/2025.
-//
-
 #ifndef SORTINGSYSTEM_H
 #define SORTINGSYSTEM_H
 
@@ -98,29 +94,38 @@ void SortingSystem<T>::bubbleSort()
         cout << "Pass " << i + 1 << " : ";
         displayData() ;
     }
-
+    cout << "\n\nThe Sorted Data : ";
+    this->displayData() ;
 }
 
 // Merge sort algorithm :
 
 template <typename T>
-void SortingSystem<T>::merge(const int &  left, const int&  mid,const  int&  right)
-{
+void SortingSystem<T>::merge(const int &  left, const int&  mid,const  int&  right) {
     int n1 = mid - left + 1 ;
     int n2 = right - mid ;
-
+    cout << "Left  = " << left << " , Right = " << right << endl;
     T *L = new T [n1] , *R = new T [n2] ;
 
+    cout << "The left array  : [" ;
     //Coping the elements to L :
     for (size_t i = 0; i < n1; i++)
     {
         L[i] = data[left +  i] ;
+        if (i != n1 -1 )cout << L[i] << "," ;
+        else cout << L[i] ;
     }
+    cout<<"] " <<endl;
+    cout << "The Right array  : [" ;
     //Coping the elements to R :
     for (size_t i = 0  ; i < n2 ; i++)
     {
-        R[i] = data[mid + i + 1 ] ;
+        R[i] = data[mid + 1 + i ] ;
+       if(i != n2 - 1 ) cout << R[i] << "," ;
+       else cout << R[i]  ;
+
     }
+    cout <<  "] "<< endl;
 
 
     // Initialize the 3 pointers :
@@ -167,18 +172,31 @@ void SortingSystem<T>::mergeSort(const int &  left,const int&  right)
 {
     static int iteration = 0 ;
     if(left < right ) {
+       ;
         int middle = left + (right - left) / 2;
         mergeSort(left , middle) ;
         mergeSort(middle + 1 , right ) ;
+        cout << "Iteration # " << iteration + 1  << " : " <<endl;
         merge (left ,middle ,right ) ;
-        cout <<"Iteration "<< ++iteration << " : " ;
+        cout <<"After merging  " << " : " ;
         displayData() ;
+        ++iteration  ;
+        cout << endl <<endl ;
+
     }
+    // reset the counter
+    if(iteration == size -1  )  {
+        iteration = 0 ;
+    }
+
 }
 
 template<typename T>
 void SortingSystem<T>::mergeSort() {
+
     mergeSort(0 , size - 1);
+    cout << "\nThe Sorted Data  : " ;
+    this->displayData() ;
 }
 
 template<typename T>
@@ -280,7 +298,7 @@ void SortingSystem<T>::radixSort() {
     }
     // Doing count sort from the LSB :
     for (int i = 1 ;  max / i > 0 ; i *= 10) {
-       cout << "Applying count sort on the " << i << " 's digit : " <<endl; ;
+        cout << "Applying Count Sort on the digit place: " << i << "'s place" << endl;
         countSort(i) ;
         this->displayData() ;
     }
@@ -302,11 +320,11 @@ void SortingSystem<T>::displayData() {
 
 template<typename T>
 void SortingSystem<T>::measureSortTime(void(SortingSystem::*sortFunc)()) {
-    const clock_t start = clock() ; //Wall time in windows
-    (this->*sortFunc)();
-    const clock_t end = clock() ;
-    const double elapsed = static_cast<double>(end - start)/ CLOCKS_PER_SEC ;
-    cout << "Sorting Time : "<< elapsed << " seconds" << endl;
+    auto start = chrono::high_resolution_clock::now();
+    (this->*sortFunc)();  // Call the sorting function
+    auto end = chrono::high_resolution_clock::now();
+    auto  res = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout << "Sorting Time: " << res.count () << " ms" << endl;
 
 }
 
