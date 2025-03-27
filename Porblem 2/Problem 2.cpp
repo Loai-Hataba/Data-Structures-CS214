@@ -45,6 +45,33 @@ void displayPoly(int* poly, int size){
     cout << endl;
 }
 
+int* sum(int* poly1, int*poly2, int size1, int size2, int maxSize){
+    int* res = new int[maxSize];
+    for (int i = 0; i < maxSize; ++i) {
+        if (i >= size1){
+            res[i] = poly2[i];
+        }
+        else if (i >= size2){
+            res[i] = poly1[i];
+        }
+        else res[i] = poly1[i] + poly2[i];
+    }
+    return res;
+}
+int* diff(int* poly1, int*poly2, int size1, int size2, int maxSize){
+    int* res = new int[maxSize];
+    for (int i = 0; i < maxSize; ++i) {
+        if (i >= size1){
+            res[i] = poly2[i];
+        }
+        else if (i >= size2){
+            res[i] = poly1[i];
+        }
+        else res[i] = poly2[i] - poly1[i];
+    }
+    return res;
+}
+
 
 
 
@@ -66,6 +93,8 @@ int main() {
     int sz2 = deg2+2;
     int* poly2 = new int[sz2];
 
+    int maxSZ = max(sz1,sz2);
+
     cout<<"Enter polynomial: ";
     for (int i = 0; i < sz2; ++i) {
         cin>>poly2[i];
@@ -76,4 +105,11 @@ int main() {
     cout<<"second polynomial: ";
     displayPoly(poly2, sz2);
 
+    int* sumPoly = sum(poly1, poly2, sz1, sz2, maxSZ);
+    cout<<"Sum of the two polynomials: ";
+    displayPoly(sumPoly, maxSZ);
+
+    int* diffPoly = diff(poly1, poly2, sz1, sz2, maxSZ);
+    cout<<"Difference of the two polynomials: ";
+    displayPoly(diffPoly, maxSZ);
 }
