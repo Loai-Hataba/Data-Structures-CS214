@@ -181,7 +181,7 @@ void SortingSystem<T>::mergeSort(const int &  left,const int&  right)
         cout <<"After merging  " << " : " ;
         displayData() ;
         ++iteration  ;
-        cout << endl <<endl ;
+        cout << endl  ;
 
     }
     // reset the counter
@@ -195,7 +195,7 @@ template<typename T>
 void SortingSystem<T>::mergeSort() {
 
     mergeSort(0 , size - 1);
-    cout << "\nThe Sorted Data  : " ;
+    cout << "The Sorted Data  : " ;
     this->displayData() ;
 }
 
