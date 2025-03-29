@@ -2,6 +2,7 @@
 #define SORTINGSYSTEM_H
 
 #include <chrono>
+#include <iomanip>
 #include <iostream>
 
 using namespace std;
@@ -16,6 +17,7 @@ public:
     SortingSystem(const int & n);  // Constructor
     ~SortingSystem();      // Destructor
     void insertionSort();
+    void insertionSort(int* & arr , const int &  n );
     void selectionSort();
     void bubbleSort();
     void shellSort();
@@ -45,7 +47,7 @@ SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
     //string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    int arr [15 ] = {10 , -2 , 8 , 4 ,1 ,-20 , 13 , -100 , 50 ,100, 1000 , 999 , 998 , -997 , 9   } ;
+    int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -66,6 +68,26 @@ void SortingSystem<T>::insertionSort()
 
 }
 
+template<typename T>
+void SortingSystem<T>::insertionSort(int*& arr, const int &n) {
+    // var to store the key ( the element that we want to insert in the correct position)
+    int key = 0 ;
+    // the while loop iterator
+    int j = 0 ;
+    for (size_t i = 1; i < n  ; i++)
+    {
+        key = arr[i];// key = 5
+        j = i - 1 ; // j =  1
+        // for ascending order
+        while (j>=0 && key < arr[j])
+        {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        // we have found the correct position for the key
+        arr[j + 1  ] =key ;
+    }
+}
 
 
 template <typename T>
@@ -301,6 +323,98 @@ void SortingSystem<T>::radixSort() {
         countSort(i) ;
         this->displayData() ;
     }
+}
+
+template <typename T >
+void SortingSystem<T>::bucketSort() {
+
+    if(this->size  == 1 ) {
+        cout << "The sorted data : " ;
+        this->displayData() ;
+        return;
+    }
+    // Determine min and max
+    T min = data[0], max = data[0];
+   for (int i = 0; i < this->size ; i++) {
+       if (min > data[i]) {
+           min = data[i];
+       }
+       if (max < data[i]) {
+           max = data[i];
+       }
+   }
+    cout << "The Min value : " << min << "\nThe Max value : " << max << endl <<endl;
+    const int range = max - min      ;
+    int numOfBuckets = 0 ;
+    if(this->size <= 5)  numOfBuckets = 2 ;
+    else  numOfBuckets = 5 ;
+    // using the bucketSizes Array to avoid unnecessary zeros
+    int* bucketSizes = new int[numOfBuckets]{};// Initialize all to 0
+
+    for (int i = 0; i < size; i++) {
+        const int index = (data[i] - min ) * (numOfBuckets - 1) / range ;
+        ++bucketSizes[index];
+
+    }
+    // setting the number of buckets and the bucket width
+    T ** buckets = new T * [numOfBuckets];
+    for (int i = 0; i < numOfBuckets; i++) {
+        if(bucketSizes[i] == 0) {
+            buckets[i] = new T [bucketSizes[i]];
+        }
+        else {
+            buckets[i] = new T [bucketSizes[i]]{0};
+        }
+
+    }
+    cout << "Insertion into the buckets : " <<endl;
+    // Insert the elements into the buckets
+    for (int i = 0; i < size; ++i) {
+        int index = (data[i] - min ) * (numOfBuckets - 1) / range ;
+        cout << "Adding [ " << setw(2)<< data[i] << setw(3) <<  " ] to index  : " << index  << endl;
+        for (int j = 0; j < bucketSizes[index] ; j++) {
+            if( buckets[index][j] == 0 ) {
+                buckets[index][j] = data[i];
+                break;
+            }
+        }
+    }
+    cout << "Buckets Before sorting: " << endl;
+    for (int i = 0; i < numOfBuckets ; i++) {
+        cout << "Bucket " << i << ": ";
+        for(int j = 0  ; j < bucketSizes[i]; j++) {
+            cout << buckets[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+    // Sorting each bucket and merging them back
+    for (int i = 0; i < numOfBuckets; ++i) {
+        insertionSort(buckets[i], bucketSizes[i] );
+    }
+    cout << "Buckets After sorting : " <<endl;
+    for (int i = 0; i < numOfBuckets ; i++) {
+        cout << "Bucket " << i << ": ";
+
+        for(int j = 0  ; j < bucketSizes[i]; j++) {
+            cout << buckets[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+    int data_index = 0;
+    for (int i = 0; i < numOfBuckets; ++i) {
+        for(int j = 0  ; j < bucketSizes[i]; j++) {
+            data[data_index++] = buckets[i][j];
+        }
+    }
+    // Free allocated memory
+    for (int i = 0; i < numOfBuckets; ++i) {
+        delete[] buckets[i]; // Free each row
+    }
+    delete[] buckets; // Free the array of pointers
+    cout << "The Sorted Data : " ;
+    this->displayData() ;
 }
 
 template<typename T>
