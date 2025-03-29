@@ -32,7 +32,6 @@ public:
     int partition(const int &  low, const int & high);         // Quick sort helper
 
 
-
     void displayData(); // Print the current state of the array
 
     void measureSortTime(void (SortingSystem :: *sortFunc)());

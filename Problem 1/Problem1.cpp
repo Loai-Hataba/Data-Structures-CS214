@@ -11,7 +11,7 @@ class Guest
 
 public:
     // Methods :
-    // Empty constructor ( for the list of  guests actually )
+    // Empty constructor ( for the list of  guests )
     Guest()
     {
         this->name = "name";
@@ -24,7 +24,7 @@ public:
         // validate all the fields 
         if (name == "" || contact == "" || iftar_date == "")
         {
-            cerr << "Error : Please make sure to fill the name  field" << endl;
+            cout << "Error : Please make sure to fill all fields" << endl;
             return;
         }
         // validate the contact field (ensuring the email is correct) 
@@ -32,15 +32,16 @@ public:
         size_t dotFound = contact.find('.');
         if (atFound== string::npos || dotFound == string::npos )
         {
-            cerr << "Error : Please make sure to fill the contact field with a valid email" << endl;
+            cout << "Error : Please make sure to fill the contact field with a valid email" << endl;
             return;
         
         }
         // validate the date field (ensuring the date is in the correct format)
         if(iftar_date.size() != 10){
-            cerr << "Error : Please make sure to fill the date field with the correct format (YYYY-MM-DD)" << endl;
+            cout << "Error : Please make sure to fill the date field with the correct format (YYYY-MM-DD)" << endl;
             return;
-        }        
+        } 
+        // all values are valid       
         this->name = name;
         this->contact = contact;
         this->iftar_date = iftar_date;
@@ -56,9 +57,10 @@ public:
     void update_invitation(const string &new_date)
     {
         if(new_date.size() != 10){
-            cout << "Please make sure to fill the date field with the correct format (YYYY-MM-DD)" << endl;
+            cout << "Error : The new date for " << this->name  << "isn't int the format (YYYY-MM-DD)" << endl;
             return;
         }
+        // the date is valid 
         this->iftar_date = new_date;
     }
     // Getter for the name
@@ -74,11 +76,13 @@ public:
 
     bool operator>(const Guest &guest) const
     {
+         // If same date, sort by name
         if (this->iftar_date == guest.iftar_date)
         {
-            return this->name > guest.name; // If same date, sort by name
+            return this->name > guest.name;
         }
-        return this->iftar_date > guest.iftar_date; // Primary sorting by date
+        // else sort by date
+        return this->iftar_date > guest.iftar_date; 
     }
 };
 
@@ -117,7 +121,7 @@ public:
     {
         // validate the guest information
         if(guest.getGuestName() == "" || guest.getGuestDate() == "" || guest.getGuestDate() == ""){
-            cerr << "Error : Please make sure to fill the guest information correctly" << endl;
+            cout << "Error : Please make sure to fill the guest information correctly" << endl;
             return;
         }
 
@@ -134,7 +138,7 @@ public:
     void remove_guest(const string &name)
     {
         if(no_guests == 0){
-            cerr << "Error : The list is empty , No guests to remove" << endl;
+            cout << "Error : The list is empty , No guests to remove" << endl;
             return;
         }
         bool found = false; 
@@ -154,7 +158,7 @@ public:
             }
         }
         if(!found){
-            cerr << "Error : Guest is not in the list, please make sure next time " << endl;
+            cout << "Error : Guest is not in the list, please make sure next time " << endl;
         }
     }
 
@@ -186,14 +190,14 @@ public:
         }
         if (!found)
         {
-            cerr << "Error : Guest is not in the list, please make sure next time " << endl;
+            cout << "Error : Guest is not in the list, please make sure next time " << endl;
         }
     }
     // function to send a notification (Sends a reminder message to all guests on a specific dateby email.)
     void send_reminder(const string &date)
     {
         if(no_guests == 0){
-            cerr << "Error : No guests to send reminders to" << endl;
+            cout << "Error : No guests to send reminders to" << endl;
             return;
         }
         cout << "Sending reminders..." << endl;
