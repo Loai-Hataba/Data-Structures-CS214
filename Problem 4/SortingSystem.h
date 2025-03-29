@@ -1,7 +1,3 @@
-//
-// Created by abdal on 15/03/2025.
-//
-
 #ifndef SORTINGSYSTEM_H
 #define SORTINGSYSTEM_H
 
@@ -24,7 +20,9 @@ public:
     void bubbleSort();
     void shellSort();
     void mergeSort(const int & left,const  int &  right);
+    void mergeSort () ;// for the measure function
     void quickSort(const int &  left,const int& right);
+    void quickSort () ;// for the measure function
     void countSort();
     void countSort(const int & bit );// helper function for the radix sort
     void radixSort();
@@ -32,7 +30,6 @@ public:
     
     void merge(const int &  left, const int&  mid,const  int&  right); // Merge sort helper
     int partition(const int &  low, const int & high);         // Quick sort helper
-
 
 
     void displayData(); // Print the current state of the array
@@ -48,7 +45,7 @@ SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
     //string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    int arr [ ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 100 , 50 } ;
+    int arr [15 ] = {10 , -2 , 8 , 4 ,1 ,-20 , 13 , -100 , 50 ,100, 1000 , 999 , 998 , -997 , 9   } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -96,29 +93,38 @@ void SortingSystem<T>::bubbleSort()
         cout << "Pass " << i + 1 << " : ";
         displayData() ;
     }
-
+    cout << "\n\nThe Sorted Data : ";
+    this->displayData() ;
 }
 
 // Merge sort algorithm :
 
 template <typename T>
-void SortingSystem<T>::merge(const int &  left, const int&  mid,const  int&  right)
-{
+void SortingSystem<T>::merge(const int &  left, const int&  mid,const  int&  right) {
     int n1 = mid - left + 1 ;
     int n2 = right - mid ;
-
+    cout << "Left  = " << left << " , Right = " << right << endl;
     T *L = new T [n1] , *R = new T [n2] ;
 
+    cout << "The left array  : [" ;
     //Coping the elements to L :
     for (size_t i = 0; i < n1; i++)
     {
         L[i] = data[left +  i] ;
+        if (i != n1 -1 )cout << L[i] << "," ;
+        else cout << L[i] ;
     }
+    cout<<"] " <<endl;
+    cout << "The Right array  : [" ;
     //Coping the elements to R :
     for (size_t i = 0  ; i < n2 ; i++)
     {
-        R[i] = data[mid + i + 1 ] ;
+        R[i] = data[mid + 1 + i ] ;
+       if(i != n2 - 1 ) cout << R[i] << "," ;
+       else cout << R[i]  ;
+
     }
+    cout <<  "] "<< endl;
 
 
     // Initialize the 3 pointers :
@@ -165,13 +171,36 @@ void SortingSystem<T>::mergeSort(const int &  left,const int&  right)
 {
     static int iteration = 0 ;
     if(left < right ) {
+       ;
         int middle = left + (right - left) / 2;
         mergeSort(left , middle) ;
         mergeSort(middle + 1 , right ) ;
+        cout << "Iteration # " << iteration + 1  << " : " <<endl;
         merge (left ,middle ,right ) ;
-        cout <<"Iteration "<< ++iteration << " : " ;
+        cout <<"After merging  " << " : " ;
         displayData() ;
+        ++iteration  ;
+        cout << endl  ;
+
     }
+    // reset the counter
+    if(iteration == size -1  )  {
+        iteration = 0 ;
+    }
+
+}
+
+template<typename T>
+void SortingSystem<T>::mergeSort() {
+
+    mergeSort(0 , size - 1);
+    cout << "The Sorted Data  : " ;
+    this->displayData() ;
+}
+
+template<typename T>
+void SortingSystem<T>::quickSort() {
+    quickSort(0 , size - 1);
 }
 
 template<typename T>
@@ -179,49 +208,46 @@ void SortingSystem<T>::countSort() {
 
     // First find the max number :
     int max = data[0];
+    int min = data[0] ;
     for (int i = 1; i < size ; i++) {
         if (data[i] > max) {
             max = data[i];
         }
+        if (data[i] < min) {
+            min = data[i];
+        }
     }
-    ++max ;
     // then making an array to store the occurrences of each number
-    auto *countArray = new int[max ] ;
-    // Initialize it to be of zeros
-    for (int i = 0; i < max ; i++) {
-        countArray[i] = 0 ;
-    }
+    const int range = max - min + 1 ;
+    int *countArray = new int[range ] {0}  ;
     // then count occurrences :
     for (int i = 0; i < size; i++) {
-        countArray[ data[i] ]  += 1   ;
+       ++ countArray[ data[i] - min  ]    ;
     }
-    // cout << "The Count array : " <<endl  ;
-    // for (int i = 0; i < max ; i++) {
-    //   cout << countArray[i] << " " ;
-    // }
-    cout << endl;
     // then convert the count array to a cumulative one :
-    for (int i = 1; i < max  ; i++) {
+    for (int i = 1; i < range  ; i++) {
         countArray[i] += countArray[i-1] ;
     }
-    // cout << "The cumulative array :  " << endl ;
-    // for (int i = 0; i < max ; i++) {
-    //     cout << countArray[i] << " " ;
-    // }
-
-    cout << endl;
     // the sorted array :
-    auto sorted = new int[size] ;
+    int * sorted = new int[size]{0} ;
     for (int i = size - 1 ; i >=0 ; i--) {
-        sorted[countArray[data[i]] - 1 ] = data[i];
-        --countArray[data[i]]  ;
+        // the algorithm
+        sorted[countArray[data[i] - min] - 1 ] = data[i];
+        --countArray[data[i] - min ]  ;
+        // For displaying the iterations
+        // Printing the sorted array after every iteration
+        cout << "Iteration # " << size - i  << " : [ ";
+        for (int i = 0; i < size; i++) {
+            if (i != size - 1)
+                cout << sorted[i] << ", ";
+            else
+                cout << sorted[i] << " ]" << endl;
+        }
     }
     //finally copying the elements to the data var :
     for (int i = 0; i < size; i++) {
         data[i] = sorted[i];
     }
-    cout << "The sorted array : ";
-    this->displayData();
     delete[] sorted ;
     delete[] countArray;
 
@@ -229,14 +255,14 @@ void SortingSystem<T>::countSort() {
 
 template<typename T>
 void SortingSystem<T>::countSort(const int &bit) {
-    const int digitsRange = 10 ;
+    const int digitsRange = 19  ; //from -9 to 9
     int count [digitsRange]  ={ 0 }; // the array that we will count number of occurrences in it
     int * output = new int [this->size ] ;//The sorted array
     // count number of occurrences :
     for (int i = 0; i < this->size ; i++) {
 
         // extract the digit :
-        int digit = (data[i] /bit ) % 10;
+        int digit = (data[i] /bit ) % 10 +9 ;
          ++count[ digit ] ;
     }
     // convert the count array to cumulative one :
@@ -245,13 +271,15 @@ void SortingSystem<T>::countSort(const int &bit) {
     }
     //Sort the elements from the left :
     for (int i = this->size -  1  ; i >=0 ; --i) {
-        int digit = (data[i] /bit ) % 10;
+        int digit = (data[i] /bit ) % 10 + 9;
         output [count [ digit ] - 1 ] = data[i];
         --count [digit ] ;
     }
     // copy the elements to the data array :
+
     for (int i = 0; i < this->size ; i++) {
         data[i] = output [i];
+
 
     }
     delete[] output ;
@@ -263,13 +291,15 @@ void SortingSystem<T>::radixSort() {
     // find the max ele :
     int max = data[0];
     for (int i = 1; i < this->size ; i++) {
-        if (data[i] > max) {
+        if (abs(data[i]) > max) {
             max = data[i];
         }
     }
     // Doing count sort from the LSB :
     for (int i = 1 ;  max / i > 0 ; i *= 10) {
+        cout << "Applying Count Sort on the digit place: " << i << "'s place" << endl;
         countSort(i) ;
+        this->displayData() ;
     }
 }
 
@@ -289,11 +319,11 @@ void SortingSystem<T>::displayData() {
 
 template<typename T>
 void SortingSystem<T>::measureSortTime(void(SortingSystem::*sortFunc)()) {
-    const clock_t start = clock() ; //Wall time in windows
-    (this->*sortFunc)();
-    const clock_t end = clock() ;
-    const double elapsed = static_cast<double>(end - start)/ CLOCKS_PER_SEC ;
-    cout << "Sorting Time : "<< elapsed << " seconds" << endl;
+    auto start = chrono::high_resolution_clock::now();
+    (this->*sortFunc)();  // Call the sorting function
+    auto end = chrono::high_resolution_clock::now();
+    auto  res = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout << "Sorting Time: " << res.count () << " ms" << endl;
 
 }
 

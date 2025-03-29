@@ -11,16 +11,37 @@ class Guest
 
 public:
     // Methods :
-    // Empty constructor ( for the list of  guests actually )
+    // Empty constructor ( for the list of  guests )
     Guest()
     {
-        this->name = "";
-        this->contact = "";
-        this->iftar_date = "";
+        this->name = "name";
+        this->contact = "example@example.com";
+        this->iftar_date = "YYYY-MM-DD";
     }
     // Parametrized constructor
     Guest(const string &name, const string &contact, const string &iftar_date)
     {
+        // validate all the fields 
+        if (name == "" || contact == "" || iftar_date == "")
+        {
+            cout << "Error : Please make sure to fill all fields" << endl;
+            return;
+        }
+        // validate the contact field (ensuring the email is correct) 
+        size_t atFound = contact.find('@');
+        size_t dotFound = contact.find('.');
+        if (atFound== string::npos || dotFound == string::npos )
+        {
+            cout << "Error : Please make sure to fill the contact field with a valid email" << endl;
+            return;
+        
+        }
+        // validate the date field (ensuring the date is in the correct format)
+        if(iftar_date.size() != 10){
+            cout << "Error : Please make sure to fill the date field with the correct format (YYYY-MM-DD)" << endl;
+            return;
+        } 
+        // all values are valid       
         this->name = name;
         this->contact = contact;
         this->iftar_date = iftar_date;
@@ -35,6 +56,11 @@ public:
     // function to update the guest invitation date
     void update_invitation(const string &new_date)
     {
+        if(new_date.size() != 10){
+            cout << "Error : The new date for " << this->name  << "isn't int the format (YYYY-MM-DD)" << endl;
+            return;
+        }
+        // the date is valid 
         this->iftar_date = new_date;
     }
     // Getter for the name
@@ -50,11 +76,13 @@ public:
 
     bool operator>(const Guest &guest) const
     {
+         // If same date, sort by name
         if (this->iftar_date == guest.iftar_date)
         {
-            return this->name > guest.name; // If same date, sort by name
+            return this->name > guest.name;
         }
-        return this->iftar_date > guest.iftar_date; // Primary sorting by date
+        // else sort by date
+        return this->iftar_date > guest.iftar_date; 
     }
 };
 
@@ -73,7 +101,9 @@ class IftarManger
         {
             temp[i] = guest_list[i];
         }
-        delete[] guest_list;
+        if(guest_list != nullptr){
+            delete[] guest_list;
+        }
         capacity = new_cap;
         guest_list = temp;
     }
@@ -87,30 +117,48 @@ public:
         guest_list = new Guest[this->capacity];
     }
     // function to add a new guest
-    void add_guest(const Guest &guest)
+    void add_guest( Guest &guest)
     {
+        // validate the guest information
+        if(guest.getGuestName() == "" || guest.getGuestDate() == "" || guest.getGuestDate() == ""){
+            cout << "Error : Please make sure to fill the guest information correctly" << endl;
+            return;
+        }
+
+        // if the list is full, resize it
         if (no_guests == capacity)
         {
+            // resize by adding more 10 cells
             resize(capacity + 10);
         }
         guest_list[no_guests] = guest;
+        // increment the number of guests
         ++no_guests;
     }
     void remove_guest(const string &name)
     {
+        if(no_guests == 0){
+            cout << "Error : The list is empty , No guests to remove" << endl;
+            return;
+        }
+        bool found = false; 
         for (size_t i = 0; i < no_guests; i++)
         {
             Guest guest = guest_list[i];
             if (guest.getGuestName() == name)
             {
                 // shifting the elements to the left
-                for (size_t j = i; j < no_guests; j++)
+                for (size_t j = i; j < no_guests  -1 ; j++)
                 {
                     guest_list[j] = guest_list[j + 1];
                 }
                 no_guests--;
+                found = true;
                 break;
             }
+        }
+        if(!found){
+            cout << "Error : Guest is not in the list, please make sure next time " << endl;
         }
     }
 
@@ -126,6 +174,8 @@ public:
     // Function to update a guest information
     void update_guest_invitation(const string &name, const string &new_date)
     {
+        bool found = false;
+        // searching  the guest by name
         for (size_t i = 0; i < no_guests; i++)
         {
             if (guest_list[i].getGuestName() == name)
@@ -134,21 +184,29 @@ public:
                      << "Updating invitation for " << guest_list[i].getGuestName() << "..." << endl
                      << endl;
                 guest_list[i].update_invitation(new_date);
+                found = true;
                 break;
             }
+        }
+        if (!found)
+        {
+            cout << "Error : Guest is not in the list, please make sure next time " << endl;
         }
     }
     // function to send a notification (Sends a reminder message to all guests on a specific dateby email.)
     void send_reminder(const string &date)
     {
+        if(no_guests == 0){
+            cout << "Error : No guests to send reminders to" << endl;
+            return;
+        }
         cout << "Sending reminders..." << endl;
         for (int i = 0; i < this->no_guests; i++)
         {
-            Guest guest = guest_list[i];
-            if (guest.getGuestDate() == date)
+            if (guest_list[i].getGuestDate() == date)
             {
-                cout << "Reminder sent to " << guest.getGuestName() << ": Your Iftar invitation is on "
-                     << guest.getGuestDate() << endl;
+                cout << "Reminder sent to " << guest_list[i].getGuestName() << ": Your Iftar invitation is on "
+                     << guest_list[i].getGuestDate() << endl;
             }
         }
     }
@@ -173,6 +231,21 @@ public:
 int main()
 {
     IftarManger manager;
+    //! Test the Iftar Manager 
+    // trying to remove a guest from an empty list 
+    manager.remove_guest("Aisha");
+    //! adding guest with empty name or contact
+    cout << "Adding guests with empty fields : " << endl;
+    Guest emptyGuest ("" ,"","" );  
+    manager.add_guest(emptyGuest); 
+    //!validating the email 
+    cout << "Adding guests with invalid email : " << endl;
+    Guest invalidEmail ("Aisha" ,"aishaexample.com","2025-03-15");
+    manager.add_guest(invalidEmail);
+    //!validating the date 
+    cout << "Adding guests with invalid date : " << endl;
+    Guest invalidDate ("Ahmed" , "ahmed@example.com", "22/9") ;
+    manager.add_guest(invalidDate);
     // Add Guests :
     Guest guest1("Aisha", "aisha@example.com", "2025-03-15");
     Guest guest2("Omar", "omar@example.com", "2025-03-18");
@@ -191,5 +264,7 @@ int main()
     manager.display_all_guests();
 
     manager.send_reminder("2025-03-15");
+    int t =0 ;
+    cin>>t; 
     return 0;
 }
