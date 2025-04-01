@@ -17,9 +17,9 @@ public:
     SortingSystem(const int & n);  // Constructor
     ~SortingSystem();      // Destructor
     void insertionSort(int* & arr , const int &  n );   //insertion gamed
-    void selectionSort();   //selection bardo gamed
+    void selectionSort(int* & arr , const int &  n );   //selection bardo gamed
     void bubbleSort();
-    void shellSort();       //shell agmad menhom
+    void shellSort(int* & arr , const int &  n );       //shell agmad menhom
     void mergeSort(const int & left,const  int &  right);
     void mergeSort () ;// for the measure function
     void quickSort(const int &  left,const int& right);
@@ -62,8 +62,26 @@ SortingSystem<T>::~SortingSystem() {
 
 
 template <typename T>
-void SortingSystem<T>::insertionSort()
+void SortingSystem<T>::insertionSort(int* & arr , const int &  n )
 {
+    arrz = arr;
+    // main iteration
+    int count = 0;
+    for (int i = 1, j; i < 6;i++){
+        int tempo = arrz[i];
+        // reverse iteration
+        for(j = i; j >0 && tempo < arrz[j-1]; j--){
+            arrz[j] = arrz[j-1];
+        }
+        arrz[j] = tempo;
+        cout << "after Iteration no.: " << count << "\n ";
+        for (auto i : arrz)
+        {
+            cout << i << " ";
+        }
+        count++;
+        cout << endl;
+    }
 
 }
 
@@ -309,7 +327,7 @@ void SortingSystem<T>::countSort(const int &bit) {
 
 template<typename T>
 void SortingSystem<T>::radixSort() {
-    // find the max ele :
+    // find the max element :
     int max = data[0];
     for (int i = 1; i < this->size ; i++) {
         if (abs(data[i]) > max) {
