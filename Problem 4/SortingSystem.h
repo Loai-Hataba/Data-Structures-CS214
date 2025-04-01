@@ -16,11 +16,10 @@ class SortingSystem
 public:
     SortingSystem(const int & n);  // Constructor
     ~SortingSystem();      // Destructor
-    void insertionSort();
-    void insertionSort(int* & arr , const int &  n );
-    void selectionSort();
+    void insertionSort(int* & arr , const int &  n );   //insertion gamed
+    void selectionSort();   //selection bardo gamed
     void bubbleSort();
-    void shellSort();
+    void shellSort();       //shell agmad menhom
     void mergeSort(const int & left,const  int &  right);
     void mergeSort () ;// for the measure function
     void quickSort(const int &  left,const int& right);
