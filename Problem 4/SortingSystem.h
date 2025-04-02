@@ -87,7 +87,7 @@ void SortingSystem<T>::selectionSort(){
         for (int j = i+1; j < this->size; j++){
             if (data[j] < data[indexMin]) indexMin = j;     // if found smaller element make it the new indexMin
         }
-        swap(data[i], data[indexMin]);
+        if (indexMin != i) swap(data[i], data[indexMin]); // only swaap if the smallest element isnt the current element (unecesary swap)
         cout << "after iteration: [";
         for (int k = 0; k < this->size; k++) { 
             cout << data[k] << ", "; 
