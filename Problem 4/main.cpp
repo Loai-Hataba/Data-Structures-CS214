@@ -6,8 +6,8 @@ using namespace  std ;
 int main () {
     cout << "Welcome to Sorting System app " <<endl <<endl ;
 
-    SortingSystem<string> s (9) ;
+    SortingSystem<int> s (9) ;
     //s.measureSortTime(&SortingSystem<int> :: radixSort) ;
-    s.measureSortTime(&SortingSystem<string> :: insertionSort) ;
+    s.measureSortTime(&SortingSystem<int> :: selectionSort) ;
     return 0;
 }

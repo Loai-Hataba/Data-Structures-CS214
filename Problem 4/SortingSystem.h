@@ -45,8 +45,8 @@ template<typename T>
 SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
-    string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    //int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
+    // string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
+    int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -68,7 +68,7 @@ void SortingSystem<T>::insertionSort() {
     // main iteration
     for (int i = 1, j; i < this ->size ;i++){
         T tempo = data[i];
-        // reverse iteration
+        // reverse iteration (shift larger numbers to the right)
         for(j = i; j >0 && tempo < data[j-1]; j--){
             data[j] = data[j-1];
         }
@@ -78,6 +78,24 @@ void SortingSystem<T>::insertionSort() {
     }
 }
 
+template<typename T>
+void SortingSystem<T>::selectionSort(){
+    int indexMin;
+    cout << "wasa3 lel selection: \n";
+    for (int i = 0; i < this->size; i++){
+        indexMin = i;   // keep track of who is the smallest element
+        for (int j = i+1; j < this->size; j++){
+            if (data[j] < data[indexMin]) indexMin = j;     // if found smaller element make it the new indexMin
+        }
+        swap(data[i], data[indexMin]);
+        cout << "after iteration: [";
+        for (int k = 0; k < this->size; k++) { 
+            cout << data[k] << ", "; 
+        }
+        cout << "]" << endl;
+        
+    }
+}
 
 template <typename T>
 void SortingSystem<T>::bubbleSort()
