@@ -16,10 +16,10 @@ class SortingSystem
 public:
     SortingSystem(const int & n);  // Constructor
     ~SortingSystem();      // Destructor
-    void insertionSort(int* & arr , const int &  n );   //insertion gamed
-    void selectionSort(int* & arr , const int &  n );   //selection bardo gamed
+    void insertionSort( );   //insertion gamed
+    void selectionSort( );   //selection bardo gamed
     void bubbleSort();
-    void shellSort(int* & arr , const int &  n );       //shell agmad menhom
+    void shellSort();       //shell agmad menhom
     void mergeSort(const int & left,const  int &  right);
     void mergeSort () ;// for the measure function
     void quickSort(const int &  left,const int& right);
@@ -45,8 +45,8 @@ template<typename T>
 SortingSystem<T>::SortingSystem(const int &  n) {
     size = n;
     data = new T[size];
-    //string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
+    string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
+    //int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
@@ -61,48 +61,20 @@ SortingSystem<T>::~SortingSystem() {
 
 
 
-template <typename T>
-void SortingSystem<T>::insertionSort(int* & arr , const int &  n )
-{
-    arrz = arr;
-    // main iteration
-    int count = 0;
-    for (int i = 1, j; i < 6;i++){
-        int tempo = arrz[i];
-        // reverse iteration
-        for(j = i; j >0 && tempo < arrz[j-1]; j--){
-            arrz[j] = arrz[j-1];
-        }
-        arrz[j] = tempo;
-        cout << "after Iteration no.: " << count << "\n ";
-        for (auto i : arrz)
-        {
-            cout << i << " ";
-        }
-        count++;
-        cout << endl;
-    }
 
-}
 
 template<typename T>
-void SortingSystem<T>::insertionSort(int*& arr, const int &n) {
-    // var to store the key ( the element that we want to insert in the correct position)
-    int key = 0 ;
-    // the while loop iterator
-    int j = 0 ;
-    for (size_t i = 1; i < n  ; i++)
-    {
-        key = arr[i];// key = 5
-        j = i - 1 ; // j =  1
-        // for ascending order
-        while (j>=0 && key < arr[j])
-        {
-            arr[j+1] = arr[j];
-            j--;
+void SortingSystem<T>::insertionSort() {
+    // main iteration
+    for (int i = 1, j; i < this ->size ;i++){
+        T tempo = data[i];
+        // reverse iteration
+        for(j = i; j >0 && tempo < data[j-1]; j--){
+            data[j] = data[j-1];
         }
-        // we have found the correct position for the key
-        arr[j + 1  ] =key ;
+        data[j] = tempo;
+        cout << "after Iteration no.: " << i << "\n ";
+        this->displayData() ;
     }
 }
 
@@ -406,8 +378,25 @@ void SortingSystem<T>::bucketSort() {
     }
     cout << endl;
     // Sorting each bucket and merging them back
-    for (int i = 0; i < numOfBuckets; ++i) {
-        insertionSort(buckets[i], bucketSizes[i] );
+    for (int k = 0; k < numOfBuckets; ++k) {
+        // insertionSort(buckets[i], bucketSizes[i] );
+        // var to store the key ( the element that we want to insert in the correct position)
+        int key = 0 ;
+        // the while loop iterator
+        int j = 0 ;
+        for (size_t i = 1; i < bucketSizes[k]  ; i++)
+        {
+            key = buckets[k][i];// key = 5
+            j = i - 1 ; // j =  1
+            // for ascending order
+            while (j>=0 && key < buckets[k][j])
+            {
+                buckets[k][j+1] = buckets[k][j];
+                j--;
+            }
+            // we have found the correct position for the key
+            buckets[k][j + 1  ] =key ;
+        }
     }
     cout << "Buckets After sorting : " <<endl;
     for (int i = 0; i < numOfBuckets ; i++) {
