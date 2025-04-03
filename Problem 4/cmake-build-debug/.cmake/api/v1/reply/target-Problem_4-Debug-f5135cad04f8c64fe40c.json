@@ -45,14 +45,17 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++14 -fdiagnostics-color=always"
+					"fragment" : "-g -fdiagnostics-color=always"
+				},
+				{
+					"fragment" : "-std=gnu++14"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Problem 4/."
+					"path" : "D:/Hoss/github/Data-Structures-CS214/Problem 4/."
 				}
 			],
 			"language" : "CXX",

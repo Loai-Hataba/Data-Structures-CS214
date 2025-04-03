@@ -8,6 +8,7 @@ int main () {
 
     SortingSystem<int> s (15) ;
     //s.measureSortTime(&SortingSystem<int> :: radixSort) ;
-    s.measureSortTime(&SortingSystem<int> :: shellSort) ;
+//    s.measureSortTime(&SortingSystem<int> :: shellSort) ;
+    s.measureSortTime(&SortingSystem<int> :: quickSort) ;
     return 0;
 }
