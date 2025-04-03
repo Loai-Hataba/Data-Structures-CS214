@@ -47,9 +47,15 @@ SortingSystem<T>::SortingSystem(const int &  n) {
     data = new T[size];
     // string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
     int arr [15 ] = {10 , 2 , 8 , 4 ,1 ,20 , 13 , 70 , 50 ,2000, 3 , 17 , 29 , 22 , 9   } ;
+    // int arr [] = {8,4,1,6,9,2};
     for (int i = 0; i < size; i++) {
         data[i] =  arr[i] ;
     }
+    cout << "checking\n";
+    for (int i = 0; i < size; i++) {
+        cout << data[i] << " ";
+    }
+    
 
 }
 
@@ -125,6 +131,27 @@ void SortingSystem<T>::bubbleSort()
     cout << "\n\nThe Sorted Data : ";
     this->displayData() ;
 }
+
+template <typename T>
+void SortingSystem<T>::shellSort(){
+    for (int gap = this->size / 2; gap > 0; gap /= 2){   // gap between compared elemeents
+        for (int i = gap; i < this->size; i++){
+            T tempoo = data[i];
+            int j = i;
+            while (j >= gap && data[j-gap] > tempoo){
+                data[j] = data[j-gap];  //shifting larger numbers to the right
+                j-= gap;    // keeping the loop if there can be another shifting
+            }
+            data[j] = tempoo;
+        }
+    }
+    cout << "\nafter shellzz: ";
+    for (int k=0;k<this->size; k++){
+        cout << data[k] << " ";
+    }
+    cout << endl;
+}
+
 
 // Merge sort algorithm :
 
