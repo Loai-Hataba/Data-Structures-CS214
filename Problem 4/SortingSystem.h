@@ -253,13 +253,13 @@ void SortingSystem<T>::quickSort(const int &left, const int &right) {
     int pivot = left; //pivot is first element
     if (pivot < right) {
         int newPivot = partition(pivot, right); //pivot is now in right position
-        std::cout << "Pivot: " << data[newPivot] << " --> [";
+        cout << "Pivot: " << data[newPivot] << " --> [";
         for (int i = left; i < newPivot; ++i)
-            std::cout << data[i] << (i < newPivot - 1 ? ", " : "");
-        std::cout << "] " << data[newPivot] << " [";
+            cout << data[i] << (i < newPivot - 1 ? ", " : "");
+        cout << "] " << data[newPivot] << " [";
         for (int i = newPivot + 1; i <= right; ++i)
-            std::cout << data[i] << (i < right ? ", " : "");
-        std::cout << "]\n";
+            cout << data[i] << (i < right ? ", " : "");
+        cout << "]\n";
         quickSort(left, newPivot - 1);
         quickSort(newPivot + 1, right);
     }
