@@ -13,7 +13,7 @@ class SortingSystem {
     int size; // Size of the array
 
 public:
-    SortingSystem(const int &n);  // Constructor
+    SortingSystem(const int &n,  const T* array);  // Constructor
     ~SortingSystem();      // Destructor
     void insertionSort();   //insertion gamed
     void selectionSort();   //selection bardo gamed
@@ -46,15 +46,9 @@ public:
 
 
 template<typename T>
-SortingSystem<T>::SortingSystem(const int &n) {
+SortingSystem<T>::SortingSystem(const int &n, const T* array) {
     size = n;
     data = new T[size];
-    // string arr[] ={"Nablus" , "Gaza" , "Al-Khalil" , "Ramallah" , "Ariha", "Jenin","Tolkarem", "Al-Quds","Yafa"  ,} ;
-    int arr[15] = {10, 2, 8, 4, 1, 20, 13, 70, 50, 2000, 3, 17, 29, 22, 9};
-    // int arr [] = {8,4,1,6,9,2};
-    for (int i = 0; i < size; i++) {
-        data[i] = arr[i];
-    }
     cout << "checking\n";
     for (int i = 0; i < size; i++) {
         cout << data[i] << " ";

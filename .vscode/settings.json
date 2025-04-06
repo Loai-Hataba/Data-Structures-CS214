@@ -5,6 +5,8 @@
         "*.dbclient-js": "javascript",
         "iostream": "cpp",
         "ostream": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "string": "cpp",
+        "format": "cpp"
     }
 }
