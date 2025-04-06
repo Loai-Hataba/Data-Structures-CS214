@@ -54,6 +54,10 @@ int dataMenu(int sortType) {
         while (1){
             cout << "Choice: ";
             int ans = getValidNum<int>();
+            if (ans == 5) {
+                cout << "GoodBye!";
+                exit(0);
+            }
             if (ans > 5 || ans < 1){
                 cout << "Please choose a number between 1-5\n";
                 continue;
@@ -77,8 +81,59 @@ void inputArrayNum(T* arr, int size) {
     cout << "Array input complete!" << endl;
 }
 
+void inputArrayString(string* arr, int size){
+    cout << "Please enter " << size << " elements:" << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    for (int i = 0; i < size; i++) {
+        getline(cin, arr[i]);
+    }
+    cout << "Array input complete! string " << endl;
+    for (int k; k < size;k++){
+        cout << arr[k] << " ,";
+    }
+}
 
-//FIXME: add sorts menu
+template <typename T>
+void callSort(SortingSystem<T> sortObject, int sortType){
+    switch(sortType){
+        case 1:
+            sortObject.measureSortTime(&SortingSystem<T> :: insertionSort);
+            cout << "Allah akbar1\n";
+            break;
+        case 2:
+            sortObject.measureSortTime(&SortingSystem<T> :: selectionSort);
+            cout << "Allah akbar\n";
+            break;
+        case 3:
+            sortObject.measureSortTime(&SortingSystem<T> :: bubbleSort);
+            cout << "Allah akbar3\n";
+            break;
+        case 4:
+            sortObject.measureSortTime(&SortingSystem<T> :: shellSort);
+            cout << "Allah akbar4\n";
+            break;
+        case 5:
+            sortObject.measureSortTime(&SortingSystem<T> :: mergeSort);
+            cout << "Allah akbar\n";
+            break;
+        case 6:
+            sortObject.measureSortTime(&SortingSystem<T> :: quickSort);
+            cout << "Allah akbar\n";
+            break;
+            case 7:
+            case 8:
+            case 9:
+                if constexpr (std::is_integral<T>::value) {
+                    if (sortType == 7) sortObject.measureSortTime(&SortingSystem<T>::countSort);
+                    else if (sortType == 8) sortObject.measureSortTime(&SortingSystem<T>::radixSort);
+                    else if (sortType == 9) sortObject.measureSortTime(&SortingSystem<T>::bucketSort);
+                }
+                break;
+        
+    }
+}
+
+//FIXME:
 // add colors to menu
 
 int main () {
@@ -99,29 +154,34 @@ int main () {
         switch (dataType){   //initialize the proper object
             case 1:{
                 int* arr = new int[size];
-                //FIXME: add deallocation for array memory and apply for rest of datatype object initializations 
-                // add a function for inputting strings
                 inputArrayNum(arr, size);
                 SortingSystem<int> sortObject(size, arr);
-                cout << "Done int \n";
+                callSort(sortObject, menuAns);
+                delete[] arr;
                 break;
             }
             case 2:{
                 float* arr = new float[size];
+                inputArrayNum(arr, size);                
                 SortingSystem<float> sortObject(size, arr);
-                cout << "Done float \n";
+                callSort(sortObject, menuAns);
+                delete[] arr;
                 break;
             }
             case 3:{
                 double* arr = new double[size];
+                inputArrayNum(arr, size);
                 SortingSystem<double> sortObject(size, arr);
-                cout << "Done Double  \n";
+                callSort(sortObject, menuAns);
+                delete[] arr;
                 break;
             }
             case 4:{
                 string* arr = new string[size];
+                inputArrayString(arr, size);
                 SortingSystem<string> sortObject(size, arr);
-                cout << "Done String \n";
+                callSort(sortObject, menuAns);
+                delete[] arr;
                 break;
             }
             case 5:{
@@ -132,27 +192,7 @@ int main () {
             default:
                 cout << "Something unexpected happened!\n";
         }
-
-
-
-
-        SortingSystem<int> s (15) ;
-        //s.measureSortTime(&SortingSystem<int> :: radixSort) ;
-        s.measureSortTime(&SortingSystem<int> :: shellSort) ;
-        cout << "Enter num: ";
-        int test = getValidNum<int>();
-        cout << endl << test <<endl;
-        cout << "Enter string: ";
-        string testt = getValidString();
-        cout << testt << endl;
-        cout << "Enter double: ";
-        double testd = getValidNum<double>();
-        cout << fixed << setprecision(15);
-        cout << "Double: " << testd << endl;
-        cout << "Enter float: ";
-        float testf = getValidNum<float>();
-        cout << fixed << setprecision(7);
-        cout << "Float: " << testf << endl;
+        cout << "Goodbye\n";
         return 0;
     }
 }

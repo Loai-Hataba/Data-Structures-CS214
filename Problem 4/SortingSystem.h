@@ -13,7 +13,7 @@ class SortingSystem {
     int size; // Size of the array
 
 public:
-    SortingSystem(const int &n,  const T* array);  // Constructor
+    SortingSystem(const int &n, T* array);  // Constructor
     ~SortingSystem();      // Destructor
     void insertionSort();   //insertion gamed
     void selectionSort();   //selection bardo gamed
@@ -46,9 +46,12 @@ public:
 
 
 template<typename T>
-SortingSystem<T>::SortingSystem(const int &n, const T* array) {
+SortingSystem<T>::SortingSystem(const int &n, T* array) {
     size = n;
     data = new T[size];
+    for (int i = 0; i < size; i++) {
+        data[i] = array[i]; // Copy each element
+    }
     cout << "checking\n";
     for (int i = 0; i < size; i++) {
         cout << data[i] << " ";
@@ -263,7 +266,7 @@ void SortingSystem<T>::quickSort(const int &left, const int &right) {
 template<typename T>
 int SortingSystem<T>::partition(const int &left, const int &right) {
     int i = left;
-    int pivotVal = data[left];
+    T pivotVal = data[left];
 
     for (int j = left + 1; j <= right; ++j) {
         if (data[j] < pivotVal) {
