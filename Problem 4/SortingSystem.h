@@ -52,11 +52,11 @@ SortingSystem<T>::SortingSystem(const int &n, T* array) {
     for (int i = 0; i < size; i++) {
         data[i] = array[i]; // Copy each element
     }
-    cout << "checking\n";
+    cout << "Inputted array:\n [";
     for (int i = 0; i < size; i++) {
         cout << data[i] << " ";
     }
-    cout << endl;
+    cout << "]" << endl;
 
 
 }
@@ -86,7 +86,7 @@ void SortingSystem<T>::insertionSort() {
 template<typename T>
 void SortingSystem<T>::selectionSort() {
     int indexMin;
-    cout << "wasa3 lel selection: \n";
+    cout << "selection sort in progress: \n";
     for (int i = 0; i < this->size; i++) {
         indexMin = i;   // keep track of who is the smallest element
         for (int j = i + 1; j < this->size; j++) {
@@ -95,11 +95,8 @@ void SortingSystem<T>::selectionSort() {
         if (indexMin != i)
             swap(data[i],
                  data[indexMin]); // only swaap if the smallest element isnt the current element (unecesary swap)
-        cout << "after iteration: [";
-        for (int k = 0; k < this->size; k++) {
-            cout << data[k] << ", ";
-        }
-        cout << "]" << endl;
+        cout << "after iteration: ";
+        this->displayData();
 
     }
 }
@@ -140,13 +137,11 @@ void SortingSystem<T>::shellSort() {
                 j -= gap;    // keeping the loop if there can be another shifting
             }
             data[j] = tempoo;
+
+            cout << "After iteration: ";
+            this->displayData();
         }
     }
-    cout << "\nafter shellzz: ";
-    for (int k = 0; k < this->size; k++) {
-        cout << data[k] << " ";
-    }
-    cout << endl;
 }
 
 

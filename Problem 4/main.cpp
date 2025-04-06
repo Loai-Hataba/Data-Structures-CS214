@@ -98,27 +98,21 @@ void callSort(SortingSystem<T> sortObject, int sortType){
     switch(sortType){
         case 1:
             sortObject.measureSortTime(&SortingSystem<T> :: insertionSort);
-            cout << "Allah akbar1\n";
             break;
         case 2:
             sortObject.measureSortTime(&SortingSystem<T> :: selectionSort);
-            cout << "Allah akbar\n";
             break;
         case 3:
             sortObject.measureSortTime(&SortingSystem<T> :: bubbleSort);
-            cout << "Allah akbar3\n";
             break;
         case 4:
             sortObject.measureSortTime(&SortingSystem<T> :: shellSort);
-            cout << "Allah akbar4\n";
             break;
         case 5:
             sortObject.measureSortTime(&SortingSystem<T> :: mergeSort);
-            cout << "Allah akbar\n";
             break;
         case 6:
             sortObject.measureSortTime(&SortingSystem<T> :: quickSort);
-            cout << "Allah akbar\n";
             break;
             case 7:
             case 8:
