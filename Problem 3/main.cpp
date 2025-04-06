@@ -28,7 +28,7 @@ public:
     // overloaded operators
     friend ostream & operator << (ostream & os, const SortedLinkedList &list) ;
     int operator [](int index ) ;
-    ~SortedLinkedList() ;
+    ~SortedLinkedList() ; //Destructor to free memory
 };
 
 ostream & operator<<(ostream &os, const SortedLinkedList &list) {
@@ -90,7 +90,10 @@ void SortedLinkedList::remove(int index) {
         count ++ ;
     }
     // out of bounds
-    if(curr == NULL || curr -> next == NULL ) return ;
+    if(curr == NULL || curr -> next == NULL ) {
+        cout << "Wrong index" << endl ;
+        return ;
+    }
   Node * temp = curr->next ;
     curr -> next = temp -> next ;
     delete temp ;
@@ -103,7 +106,10 @@ int SortedLinkedList::operator[](int index) {
         curr = curr->next ;
         count ++ ;
     }
-    if(curr == NULL ) return -1  ;
+    if(curr == NULL ) {
+        cout << "out of range" << endl ;
+        return -1 ;
+    };
     return curr->data ;
 }
 
@@ -119,24 +125,30 @@ SortedLinkedList::~SortedLinkedList() {
 
 int main() {
 
-    SortedLinkedList list ;
-    list.insert(5) ;
-     list.insert(6) ;
-    list.insert(6) ;
-    list.insert(7) ;
-    list.insert(8) ;
-    cout <<"Before : " <<  list << endl ;
-    cout << list[0] << endl ;
-    list.remove(0) ;
-    cout << list  <<endl;;
-    cout << list[100] << endl ;
-    list.remove(100) ;
-    cout << list <<endl; ;
-    cout << list[2] << endl ;
-    list.remove(2) ;
-    cout << list <<endl; ;
-    cout << list[2] << endl ;
-    list.remove(2) ;
-    cout << list <<endl; ;
+    SortedLinkedList L ;
+    //Test Case 1: Inserting Elements into the Sorted Linked List
+    L.insert(5) ;
+     L.insert(6) ;
+    L.insert(6) ;
+    L.insert(7) ;
+    L.insert(8) ;
+    cout << L << endl ;
+    //Test Case 2: Accessing Elements Using Index Operator
+    cout << L[2] <<endl;
+    cout << L[10] << endl ;
+    //Test Case 3: Deleting Elements from the Linked List
+    cout << L << endl ;
+    L.remove(0) ;
+    cout << L  <<endl;
+
+    L.remove(100) ;
+    cout << L <<endl;
+
+    L.remove(2) ;
+    cout << L <<endl; ;
+
+    L.remove(2) ;
+    cout << L <<endl;
+
     return 0;
 }

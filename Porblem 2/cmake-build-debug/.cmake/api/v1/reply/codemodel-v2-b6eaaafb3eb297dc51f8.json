@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Hoss/github/Data-Structures-CS214/Porblem 2/cmake-build-debug",
-		"source" : "D:/Hoss/github/Data-Structures-CS214/Porblem 2"
+		"build" : "G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Porblem 2/cmake-build-debug",
+		"source" : "G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Porblem 2"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 7
 	}
 }
