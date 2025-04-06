@@ -501,11 +501,17 @@ void SortingSystem<T>::displayData() {
 
 template<typename T>
 void SortingSystem<T>::measureSortTime(void(SortingSystem::*sortFunc)()) {
-    auto start = chrono::high_resolution_clock::now();
-    (this->*sortFunc)();  // Call the sorting function
-    auto end = chrono::high_resolution_clock::now();
-    auto res = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Sorting Time: " << res.count() << " ms" << endl;
+    try {
+        auto start = chrono::high_resolution_clock::now();
+        (this->*sortFunc)(); // Call the sorting function
+        auto end = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+        cout << "Sorting Time: " << duration << " ms\n";
+    } catch (const exception &e) {
+        cout << "An error occurred during sorting: " << e.what() << endl;
+    } catch (...) {
+        cout << "An unknown error occurred during sorting.\n";
+    }
 
 }
 

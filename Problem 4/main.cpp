@@ -90,7 +90,7 @@ int menu(){
 
 int dataMenu(int sortType) {
     if (sortType < 7){ // any data type is ok
-        cout << "                           Welcome please choose the desired data type: \n";
+        cout << "                           Please choose the desired data type: \n";
         cout << "1) int\n";
         cout << "2) float\n";
         cout << "3) double\n";
@@ -231,7 +231,14 @@ int main () {
             default:
                 cout << "Something unexpected happened!\n";
         }
-        cout << "Goodbye\n";
-        return 0;
+        while (1){
+            cout << "Do you want to continue? (1-Yes, 2-No): ";
+            int tem = getValidNum<int>();
+            if (tem < 1 || tem > 2){
+                cout << "Please choose a number between (1-2)\n";
+                continue;
+            }
+            if (tem == 1) break;
+        }
     }
 }
