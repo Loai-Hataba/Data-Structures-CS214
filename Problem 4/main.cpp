@@ -1,22 +1,67 @@
 #include <iostream>
 #include <cstdlib>
+#include <thread>
 #include "SortingSystem.h"
 #include "Methods.h"
 using namespace  std ;
 
+#define RESET   "\033[0m"
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define BLUE    "\033[1;34m"
+#define MAGENTA "\033[1;35m"
+#define CYAN    "\033[1;36m"
+#define WHITE   "\033[1;37m"
+#define BOLD "\033[1m"
+
 int menu(){
     system("cls"); //clearing screen...
+    cout << "         o                *            .+ ~~+                     .      '                                                 \n";
+    cout << "                                                             *                                       o                  '' \n";
+    cout << "  '                                 '                           |           o                                       . '   '\n";
+    cout << "                                                               -o-                                                         \n";
+    cout << "                                                      o         |                                                          \n";
+    cout << "             |              .         .  '              o                                                                  \n";
+    cout << "            -o-          .                                                   '.                       +                    \n";
+    cout << "         |   |             _|_                       /          .            o                   +                         \n";
+    cout << "        -o-                 |                       /        .               *      '    |  . .                            \n";
+    cout << "         |         o                               *                           '        -+-              '                 \n";
+    cout << "     '                       .       |      '                                     * .    |       '                         \n";
+    cout << "                                    -o- + '                   +                                            |               \n";
+    cout << "           .                         |                                                                   --o--       +     \n";
+    cout << "                                       '                                   '                         '     |               \n";
+    cout << "         '              '                                        '                                                         \n";
+    cout << "                                            .                                      +                                       \n";
+    cout << "               *                                   +            '                     .          *                    '  * \n";
+    cout << "     +            |                                                                              +                         \n";
+    cout << "                - o -                                                                                                      \n";
+    cout << "o               . |                                       .-'""'-.     *               '                                   \n";
+    cout << " ' .       .                                            .' () .   '.                                      '                \n";
+    cout << "             .                                    .    / .      o   \\                                       .              \n";
+    cout << "               '              |                  o    ; o    _   ()  ;                                                 '   \n";
+    cout << "        '       *           --o--               . .   ;     (_)      ;                     '              o                \n";
+    cout << "                 *            |       +                \\ .         o /                      .           +                   \n";
+    cout << "              /                                         '.  O  .  .'                                 '                     \n";
+    cout << "             /           '                                '-....-'         .                                         .     \n";
+    cout << "            *            .    +   *                                                                                        \n";
+    cout << "            .           .                                                                                                  \n";
+    cout << ".                                             ' '              .             +                               o             \n";
+    cout << " .  o      +                               .                                                                               \n";
+    cout << "                                .        .  .                                                                               \n";
+    cout << "\n Loading ...\n"; 
+    std::this_thread::sleep_for(std::chrono::seconds(5));
 
-    cout << "           // //////////////////////////////////////////////////////////////////////////////\n";
-    cout << "           //    _____            __  _              _       ___                      __  //\n";
-    cout << "           //   / ___/____  _____/ /_(_)___  ____ _ | |     / (_)___  ____ __________/ /  //\n";
-    cout << "           //   \\__ \\/ __ \\/ ___/ __/ / __ \\/ __ `/ | | /| / / /_  / / __ `/ ___/ __  /   //\n";
-    cout << "           //  ___/ / /_/ / /  / /_/ / / / / /_/ /  | |/ |/ / / / /_/ /_/ / /  / /_/ /    //\n";
-    cout << "           //  ____/\\____/_/   \\__/_/_/ /_/\\__, /   |__/|__/_/ /___/\\__,_/_/   \\__,_/     //\n";
-    cout << "           //                             /____/                                          //\n";
-    cout << "           // //////////////////////////////////////////////////////////////////////////////\n";
+    cout << GREEN << "           /////////////////////////////////////////////////////////////////////////////////\n";
+    cout <<  "           //" << RESET <<"    _____            __  _              _       ___                      __  " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<"   / ___/____  _____/ /_(_)___  ____ _ | |     / (_)___  ____ __________/ /  " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<"   \\__ \\/ __ \\/ ___/ __/ / __ \\/ __ `/ | | /| / / /_  / / __ `/ ___/ __  /   " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<"  ___/ / /_/ / /  / /_/ / / / / /_/ /  | |/ |/ / / / /_/ /_/ / /  / /_/ /    " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<"  ____/\\____/_/   \\__/_/_/ /_/\\__, /   |__/|__/_/ /___/\\__,_/_/   \\__,_/     " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<"                             /____/                                          " << GREEN << "//\n";
+    cout <<  "           // ////////////////////////////////////////////////////////////////////////////" << GREEN << "//\n" << RESET;
     cout << endl << endl << endl;
-    cout << "                           Welcome please choose the desired Sort: \n";
+    cout << "                           "<< BOLD << "Welcome" << RESET <<" please choose the desired Sort: \n";
     cout << "1) Insertion Sort\n";
     cout << "2) Selection Sort\n";
     cout << "3) Bubble Sort\n";
