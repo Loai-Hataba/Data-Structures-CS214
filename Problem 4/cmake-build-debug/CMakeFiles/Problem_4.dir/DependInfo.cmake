@@ -8,12 +8,15 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Hoss/github/Data-Structures-CS214/Problem 4/Methods .cpp" "CMakeFiles/Problem_4.dir/Methods_.cpp.obj" "gcc" "CMakeFiles/Problem_4.dir/Methods_.cpp.obj.d"
-  "D:/Hoss/github/Data-Structures-CS214/Problem 4/main.cpp" "CMakeFiles/Problem_4.dir/main.cpp.obj" "gcc" "CMakeFiles/Problem_4.dir/main.cpp.obj.d"
+  "G:/FCAI/2nd Year/2nd Term/Data Structure/yarab/Data-Structures-CS214/Problem 4/main.cpp" "CMakeFiles/Problem_4.dir/main.cpp.obj" "gcc" "CMakeFiles/Problem_4.dir/main.cpp.obj.d"
   )
 
-# Targets to which this target links.
-set(CMAKE_TARGET_LINKED_INFO_FILES
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

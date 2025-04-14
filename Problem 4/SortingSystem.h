@@ -48,10 +48,10 @@ public:
 template<typename T>
 SortingSystem<T>::SortingSystem(const int &n, T* array) {
     size = n;
-    data = new T[size];
-    for (int i = 0; i < size; i++) {
-        data[i] = array[i]; // Copy each element
-    }
+    data = array;
+    // for (int i = 0; i < size; i++) {
+    //     data[i] = array[i]; // Copy each element
+    // }
     cout << "Inputted array:\n [";
     for (int i = 0; i < size; i++) {
         cout << data[i] << " ";
@@ -63,8 +63,8 @@ SortingSystem<T>::SortingSystem(const int &n, T* array) {
 
 template<typename T>
 SortingSystem<T>::~SortingSystem() {
-    delete[] data;
-    data = nullptr;
+    // delete[] data;
+    // data = nullptr;
 }
 
 

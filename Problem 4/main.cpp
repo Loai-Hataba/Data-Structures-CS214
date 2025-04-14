@@ -16,48 +16,13 @@ using namespace  std ;
 #define BOLD "\033[1m"
 
 int menu(){
-    system("cls"); //clearing screen...
-    // cout << "         o                *            .+ ~~+                     .      '                                                 \n";
-    // cout << "                                                             *                                       o                  '' \n";
-    // cout << "  '                                 '                           |           o                                       . '   '\n";
-    // cout << "                                                               -o-                                                         \n";
-    // cout << "                                                      o         |                                                          \n";
-    // cout << "             |              .         .  '              o                                                                  \n";
-    // cout << "            -o-          .                                                   '.                       +                    \n";
-    // cout << "         |   |             _|_                       /          .            o                   +                         \n";
-    // cout << "        -o-                 |                       /        .               *      '    |  . .                            \n";
-    // cout << "         |         o                               *                           '        -+-              '                 \n";
-    // cout << "     '                       .       |      '                                     * .    |       '                         \n";
-    // cout << "                                    -o- + '                   +                                            |               \n";
-    // cout << "           .                         |                                                                   --o--       +     \n";
-    // cout << "                                       '                                   '                         '     |               \n";
-    // cout << "         '              '                                        '                                                         \n";
-    // cout << "                                            .                                      +                                       \n";
-    // cout << "               *                                   +            '                     .          *                    '  * \n";
-    // cout << "     +            |                                                                              +                         \n";
-    // cout << "                - o -                                                                                                      \n";
-    // cout << "o               . |                                       .-'""'-.     *               '                                   \n";
-    // cout << " ' .       .                                            .' () .   '.                                      '                \n";
-    // cout << "             .                                    .    / .      o   \\                                       .              \n";
-    // cout << "               '              |                  o    ; o    _   ()  ;                                                 '   \n";
-    // cout << "        '       *           --o--               . .   ;     (_)      ;                     '              o                \n";
-    // cout << "                 *            |       +                \\ .         o /                      .           +                   \n";
-    // cout << "              /                                         '.  O  .  .'                                 '                     \n";
-    // cout << "             /           '                                '-....-'         .                                         .     \n";
-    // cout << "            *            .    +   *                                                                                        \n";
-    // cout << "            .           .                                                                                                  \n";
-    // cout << ".                                             ' '              .             +                               o             \n";
-    // cout << " .  o      +                               .                                                                               \n";
-    // cout << "                                .        .  .                                                                               \n";
-    // cout << "\n Loading ...\n"; 
-    // std::this_thread::sleep_for(std::chrono::seconds(5));
-
+    //system("cls"); //clearing screen...
     cout << GREEN << "           /////////////////////////////////////////////////////////////////////////////////\n";
     cout <<  "           //" << RESET <<"    _____            __  _              _       ___                      __  " << GREEN << "//\n";
     cout <<  "           //" << RESET <<"   / ___/____  _____/ /_(_)___  ____ _ | |     / (_)___  ____ __________/ /  " << GREEN << "//\n";
-    cout <<  "           //" << RESET <<"   \\__ \\/ __ \\/ ___/ __/ / __ \\/ __ `/ | | /| / / /_  / / __ `/ ___/ __  /   " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<R"(   \__ \/ __ \/ ___/ __/ / __ \/ __ `/ | | /| / / /_  / / __ `/ ___/ __  /   )" << GREEN << "//\n";
     cout <<  "           //" << RESET <<"  ___/ / /_/ / /  / /_/ / / / / /_/ /  | |/ |/ / / / /_/ /_/ / /  / /_/ /    " << GREEN << "//\n";
-    cout <<  "           //" << RESET <<"  ____/\\____/_/   \\__/_/_/ /_/\\__, /   |__/|__/_/ /___/\\__,_/_/   \\__,_/     " << GREEN << "//\n";
+    cout <<  "           //" << RESET <<R"(  ____/\____/_/   \__/_/_/ /_/\__, /   |__/|__/_/ /___/\__,_/_/   \__,_/     )" << GREEN << "//\n";
     cout <<  "           //" << RESET <<"                             /____/                                          " << GREEN << "//\n";
     cout <<  "           // ////////////////////////////////////////////////////////////////////////////" << GREEN << "//\n" << RESET;
     cout << endl << endl << endl;
@@ -72,13 +37,9 @@ int menu(){
     cout << "8) Radix Sort (only for integers)\n";
     cout << "9) Bucket Sort (only for integers)\n";
     cout << "10) exit\n";
-    while (1){
+    while (true){
         cout << "Choice: ";
         int ans = getValidNum<int>();
-        if (ans == 10){
-            cout << "Goodbye!";
-            exit(0);
-        }
         if (ans > 10 || ans < 1){
             cout << "Please choose a number between 1-10\n";
             continue;
@@ -96,7 +57,7 @@ int dataMenu(int sortType) {
         cout << "3) double\n";
         cout << "4) string\n";
         cout << "5) exit\n";
-        while (1){
+        while (true){
             cout << "Choice: ";
             int ans = getValidNum<int>();
             if (ans == 5) {
@@ -111,7 +72,7 @@ int dataMenu(int sortType) {
             return ans;
         }
     }
-    else return 1; // int data type
+    return 1; // int data type
     }
     
 
@@ -133,7 +94,7 @@ void inputArrayString(string* arr, int size){
         getline(cin, arr[i]);
     }
     cout << "Array input complete! string " << endl;
-    for (int k; k < size;k++){
+    for (int k = 0 ; k < size;k++){
         cout << arr[k] << " ,";
     }
 }
@@ -168,6 +129,7 @@ void callSort(SortingSystem<T> sortObject, int sortType){
                     else if (sortType == 9) sortObject.measureSortTime(&SortingSystem<T>::bucketSort);
                 }
                 break;
+        default: cout << "Invalid sorting type!" << endl;
         
     }
 }
@@ -176,11 +138,11 @@ void callSort(SortingSystem<T> sortObject, int sortType){
 // add colors to menu
 
 int main () {
-    while (1){
+    while (true){
         int menuAns = menu(); // select sort
         int dataType = dataMenu(menuAns); // 1)int 2)float 3)double 4)string 5)exit
         int size;
-        while (1){
+        while (true){
             cout << "\nPlease enter number of elements in array: ";
             size = getValidNum<int>();
             if (size < 1){
@@ -192,33 +154,33 @@ int main () {
 
         switch (dataType){   //initialize the proper object
             case 1:{
-                int* arr = new int[size];
+                auto* arr = new int[size];
                 inputArrayNum(arr, size);
-                SortingSystem<int> sortObject(size, arr);
+                SortingSystem sortObject(size, arr);
                 callSort(sortObject, menuAns);
                 delete[] arr;
                 break;
             }
             case 2:{
-                float* arr = new float[size];
+                auto* arr = new float[size];
                 inputArrayNum(arr, size);                
-                SortingSystem<float> sortObject(size, arr);
+                SortingSystem sortObject(size, arr);
                 callSort(sortObject, menuAns);
                 delete[] arr;
                 break;
             }
             case 3:{
-                double* arr = new double[size];
+                auto* arr = new double[size];
                 inputArrayNum(arr, size);
-                SortingSystem<double> sortObject(size, arr);
+                SortingSystem sortObject(size, arr);
                 callSort(sortObject, menuAns);
                 delete[] arr;
                 break;
             }
             case 4:{
-                string* arr = new string[size];
+                auto* arr = new string[size];
                 inputArrayString(arr, size);
-                SortingSystem<string> sortObject(size, arr);
+                SortingSystem sortObject(size, arr);
                 callSort(sortObject, menuAns);
                 delete[] arr;
                 break;
@@ -229,16 +191,8 @@ int main () {
                 exit(0);
             }
             default:
-                cout << "Something unexpected happened!\n";
+                cout << "Invalid choice !\n";
         }
-        while (1){
-            cout << "Do you want to continue? (1-Yes, 2-No): ";
-            int tem = getValidNum<int>();
-            if (tem < 1 || tem > 2){
-                cout << "Please choose a number between (1-2)\n";
-                continue;
-            }
-            if (tem == 1) break;
-        }
+
     }
 }
