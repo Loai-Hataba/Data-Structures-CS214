@@ -41,7 +41,11 @@ int menu(){
     while (true){
         cout << "Choice: ";
         int ans = getValidNum<int>();
-        if(ans == 10) exit(0);
+        if(ans == 10) {
+            cout << "Goodbye!!\n";
+            cout << "exiting... \n";
+            exit(0);
+        }
         if (ans > 10 || ans < 1){
             cout << "Please choose a number between 1-10\n";
             continue;
