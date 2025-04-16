@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace std;
-
+//testing git
 template<typename T>
 class SortingSystem {
     T *data;  // Dynamic array for storing input data

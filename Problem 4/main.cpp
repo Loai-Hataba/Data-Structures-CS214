@@ -15,8 +15,9 @@ using namespace  std ;
 #define WHITE   "\033[1;37m"
 #define BOLD "\033[1m"
 
+//testing git
 int menu(){
-    //system("cls"); //clearing screen...
+    system("cls"); //clearing screen...
     cout << GREEN << "           /////////////////////////////////////////////////////////////////////////////////\n";
     cout <<  "           //" << RESET <<"    _____            __  _              _       ___                      __  " << GREEN << "//\n";
     cout <<  "           //" << RESET <<"   / ___/____  _____/ /_(_)___  ____ _ | |     / (_)___  ____ __________/ /  " << GREEN << "//\n";
@@ -193,6 +194,7 @@ int main () {
             default:
                 cout << "Invalid choice !\n";
         }
+        this_thread::sleep_for(chrono::seconds(5));
 
     }
 }
