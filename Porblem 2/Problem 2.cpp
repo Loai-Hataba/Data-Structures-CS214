@@ -61,7 +61,7 @@ int *diff(const int *poly1, const int *poly2, int *res, int size1, int size2, in
         if (i >= size1) {
             res[i] = poly2[i];
         } else if (i >= size2) {
-            res[i] = poly1[i];
+            res[i] = -poly1[i];
         } else res[i] = poly2[i] - poly1[i];
     }
     return res;

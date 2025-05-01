@@ -84,7 +84,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Hoss/github/Data-Structures-CS214/Problem 4/Methods .cpp">
+		<Unit filename="D:/Hoss/github/Data-Structures-CS214/Problem 4/Methods.h">
 			<Option target="Problem_4"/>
 		</Unit>
 		<Unit filename="D:/Hoss/github/Data-Structures-CS214/Problem 4/SortingSystem.h">
