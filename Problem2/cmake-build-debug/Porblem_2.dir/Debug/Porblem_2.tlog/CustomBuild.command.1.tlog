@@ -1,0 +1,10 @@
+^D:\HOSS\GITHUB\DATA-STRUCTURES-CS214\PROBLEM2\CMAKELISTS.TXT
+setlocal
+"D:\3b3znew\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -SD:/Hoss/github/Data-Structures-CS214/Problem2 -BD:/Hoss/github/Data-Structures-CS214/Problem2/cmake-build-debug --check-stamp-file D:/Hoss/github/Data-Structures-CS214/Problem2/cmake-build-debug/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

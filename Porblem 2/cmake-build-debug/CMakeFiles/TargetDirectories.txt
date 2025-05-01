@@ -1,3 +1,0 @@
-G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Porblem 2/cmake-build-debug/CMakeFiles/Porblem_2.dir
-G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Porblem 2/cmake-build-debug/CMakeFiles/edit_cache.dir
-G:/FCAI/2nd Year/2nd Term/Data Structure/Assignments/Porblem 2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

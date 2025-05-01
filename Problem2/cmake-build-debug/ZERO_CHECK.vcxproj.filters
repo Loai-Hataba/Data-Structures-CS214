@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Hoss\github\Data-Structures-CS214\Problem2\cmake-build-debug\CMakeFiles\60343bf0b3470bac89179adf19b2ec19\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{DB5E86BE-0C48-313A-9370-D91C5EC08CDD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
