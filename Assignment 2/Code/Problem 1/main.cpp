@@ -2,6 +2,7 @@
 using namespace std ;
 
 // 1 making the stack dataStructure using dynamic array allocation
+/// loai
 
 // 2  get the input from file
 
