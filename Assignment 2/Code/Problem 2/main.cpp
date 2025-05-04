@@ -1,16 +1,60 @@
 #include <iostream>
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
+using namespace std ;
+// AVL Class
+class AVL {
+    // Making the Node struct
+    struct Node {
+        int id ;
+        Node * right ;
+        Node * left  ;
+        // the values
+        // default constructor
+        Node () {
+            left = right = NULL ;
+            id = 0 ;
+        }
+        // parametrized constructor
+        Node ( int id ) {
+            this->id = id ;
+            left = right = NULL ;
+        }
+    };
+    // var for the root of the tree
+    Node * root ;
+public :
+    // the constructor
+    AVL() {
+    root = NULL ;
+}
+    // function to add new node
+    void insertNode (const int & id , const string & name , const string & phone , const string & email);
+    //function to remove a node
+    void removeNode (const int & id ) ;
+    //helper function to balance the tree after inserting or deletion
+    void balanceTree () ;
+    // function to rotate left
+    void rotateLeft () ;
+    // function to rotate right
+    void rotateRight () ;
+    // function to rotate right left
+    void rotateRL () ;
+    // function to rotate left right
+    void rotateLR () ;
+    // function for finding  a certain node
+    void search(const  int & id  ) ;
+    // function to display the current data in the tree
+    void listAllContacts () ;
+    // function to display the tree structure
+    void displayCurrentTree() ;
+    // the destructor
+    ~AVL () {
+        // delete all the nodes
 
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
     }
-
+};
+int main() {
+    // getting the input from file
+    // the menu
     return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
 }
