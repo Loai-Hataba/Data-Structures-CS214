@@ -22,10 +22,34 @@ int main(){
         i++;
     }
     infile>>k;
+
+    int cntToK = 0;
+    int cntOfSub = 0;
+    bool done = false;
+    bool inArow = false;    //zeros in a row
     for (int j = 0; j < i; ++j) {
-        cout<<arr[j];
+        if (arr[j] == 0 && cntToK < k){         // count zeros to k
+            cntToK++;
+            done = true;
+            inArow = true;
+        }
+        if (arr[j] == 0 && cntToK == k){
+            cntToK = 0;
+            cntOfSub++;
+            done = true;
+            inArow = false;
+        }
+        if(arr[j] == 1 && cntToK <= k && inArow) {
+            done = false;
+            break;
+        }
     }
-    cout<<endl;
-    cout<<k<<endl;
+
+    if (!done || cntToK > 0){
+        cout<<"-1"<<endl;
+    }
+    else {
+        cout<<cntOfSub<<endl;
+    }
 
 }
