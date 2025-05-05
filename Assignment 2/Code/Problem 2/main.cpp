@@ -38,8 +38,8 @@ class AVL {
     // function insert a node
     ///Abdallah
        Node * insert (Node * node , const int &  key , const Info &  info)   {
-           // base case if i have found the right place
-           if (node == NULL) {
+           // base case if we have found the right place
+           if (node == nullptr) {
               return ( new Node (key , info) ) ;
            }
            if (node -> id >  key ) {
@@ -51,7 +51,28 @@ class AVL {
            else {
                return node ;
            }
-
+           // getting the balance factor of the node
+           int factor = getBalanceFactor(node) ;
+           // there are 4 cases of unbalance nodes
+           // 1- Right - Right  case
+           if (factor < -1 && ( key > node -> right -> id ) ) {
+               return rotateLeft(node ) ;
+           }
+           // 2- Left-Left case
+           if (factor > 1 && (key < node ->left->id )) {
+               return rotateLeft(node) ;
+           }
+           // 3 Left-Right case
+           if (factor > 1 && (key > node->left->id)) {
+               node ->left = rotateLeft(node ->left) ;
+               return  ( rotateRight(node ) ) ;
+           }
+           // 4- Right - Left case
+           if (factor < -1  && (key < node->right->id)) {
+               node -> right = rotateRight (node->right) ;
+               return rotateLeft(node) ;
+           }
+           return node ;
        }
     // function to delete a node
        Node * remove (Node * root , const int &id) ;
@@ -59,10 +80,10 @@ class AVL {
        Node * search (Node * root , const int & id) ;
     // function to get the height of node
     int getHeight(Node * node ) {
-        if (node == nullptr) return -1 ;
+        if (node == nullptr) return  -1  ;
         int right = getHeight(node ->right) ;
         int left = getHeight(node -> left) ;
-        return (left > right ? left -1  : right -1  ) ;
+        return (left > right ? left  +1    : right + 1    ) ;
     }
     // function to calculate the balance factor
     int getBalanceFactor (Node * node ) {
@@ -73,14 +94,21 @@ class AVL {
     }
     // function to rotate left
     ///Abdallah
-    Node *  rotateLeft (Node *  &root ) {
+    Node *  rotateLeft (Node * node ) {
+        // check if the node is null
+        if (node == nullptr) return nullptr ;
+        // storing the values
+        Node * child = node -> right ;
+        Node * temp = child -> left  ;
+        // the rotate logic :
+        child -> left = node ;
+        node -> right  = temp ;
+        return child ;
     }
     // function to rotate right
-    Node  rotateRight (Node * & root) ;
-    // function to rotate right left
-    Node rotateRL (Node * & root) ; /// Abdallah
-    // function to rotate left right
-    Node  rotateLR (Node * & root) ; /// Abdallah
+    Node *  rotateRight (Node * node ) {
+        return node ;
+    }
     //helper function to balance the tree after inserting or deletion
     void balanceTree () ;
     // function to delete all the nodes in the tree
@@ -95,9 +123,12 @@ public :
     AVL() {
     root = NULL ;
 }
-    /// the functions that must use the recursive functions
+    /// The functions that must use the recursive functions
     // function to add new node
-    void insertContact (const int & id , const string & name , const string & phone , const string & email);
+    void insertContact (const int & id , const string & name , const string & phone , const string & email) {
+        Info info(name , phone ,email)  ;
+       root =  insert(root , id , info ) ;
+    }
     //function to remove a node
     void deleteContact (const int & id ) ;
     // function for finding  a certain node
