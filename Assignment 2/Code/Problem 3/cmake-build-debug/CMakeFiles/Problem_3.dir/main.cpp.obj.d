@@ -151,4 +151,6 @@ CMakeFiles/Problem_3.dir/main.cpp.obj: \
  D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/codecvt.h \
  D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
  D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
- D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fstream.tcc
+ D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fstream.tcc \
+ D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/sstream \
+ D:/3b3znew/CLion\ 2022.3.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/sstream.tcc

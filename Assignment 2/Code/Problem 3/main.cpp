@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -10,14 +11,21 @@ int main(){
         return 1;
     }
 
+    string line1;
+    getline(infile, line1); //only first line
+
+    stringstream ss(line1);
     int k;
-    int *poly1 = new int[100];
-    int i = 0;
-    while(infile >> poly1[i]){
+    int arr[100];
+    int i = 0;              //size
+    while(ss >> arr[i]){
         i++;
     }
+    infile>>k;
     for (int j = 0; j < i; ++j) {
-        cout<<poly1[j];
+        cout<<arr[j];
     }
+    cout<<endl;
+    cout<<k<<endl;
 
 }
