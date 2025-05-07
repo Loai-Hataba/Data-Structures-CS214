@@ -6,7 +6,6 @@
 #include <iostream>
 
 using namespace std;
-//testing git
 template<typename T>
 class SortingSystem {
     T *data;  // Dynamic array for storing input data
@@ -49,9 +48,6 @@ template<typename T>
 SortingSystem<T>::SortingSystem(const int &n, T* array) {
     size = n;
     data = array;
-    // for (int i = 0; i < size; i++) {
-    //     data[i] = array[i]; // Copy each element
-    // }
     cout << "Inputted array:\n [";
     for (int i = 0; i < size; i++) {
         cout << data[i] << " ";
@@ -62,10 +58,7 @@ SortingSystem<T>::SortingSystem(const int &n, T* array) {
 }
 
 template<typename T>
-SortingSystem<T>::~SortingSystem() {
-    // delete[] data;
-    // data = nullptr;
-}
+SortingSystem<T>::~SortingSystem() {}
 
 
 template<typename T>
@@ -144,8 +137,6 @@ void SortingSystem<T>::shellSort() {
     }
 }
 
-
-// Merge sort algorithm :
 
 template<typename T>
 void SortingSystem<T>::merge(const int &left, const int &mid, const int &right) {
@@ -238,8 +229,6 @@ void SortingSystem<T>::mergeSort() {
     this->displayData();
 }
 
-// Quick sort algorithm :
-
 template<typename T>
 void SortingSystem<T>::quickSort(const int &left, const int &right) {
     int pivot = left; //pivot is first element
@@ -256,7 +245,6 @@ void SortingSystem<T>::quickSort(const int &left, const int &right) {
         quickSort(newPivot + 1, right);
     }
 }
-
 
 template<typename T>
 int SortingSystem<T>::partition(const int &left, const int &right) {
