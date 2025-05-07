@@ -128,7 +128,7 @@ int main() {
     SortedLinkedList L ;
     //Test Case 1: Inserting Elements into the Sorted Linked List
     L.insert(5) ;
-     L.insert(6) ;
+    L.insert(6) ;
     L.insert(6) ;
     L.insert(7) ;
     L.insert(8) ;

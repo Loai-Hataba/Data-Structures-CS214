@@ -140,8 +140,6 @@ void callSort(SortingSystem<T> sortObject, int sortType){
     }
 }
 
-//FIXME:
-// add colors to menu
 
 int main () {
     while (true){
@@ -199,7 +197,7 @@ int main () {
             default:
                 cout << "Invalid choice !\n";
         }
-        this_thread::sleep_for(chrono::seconds(5));
+        this_thread::sleep_for(chrono::seconds(20));
 
     }
 }
