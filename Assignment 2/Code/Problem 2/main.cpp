@@ -1,6 +1,13 @@
 #include <iostream>
-
+#include <fstream>
+#include <limits>
+#include <sstream>
 using namespace std ;
+
+int getValidInt (ifstream fileInput ) {
+
+}
+
 struct Info {
     string name ;
     string phone ;
@@ -30,8 +37,8 @@ struct Node {
     }
 };
 
-// AVL Class
-class AVL {
+// AVLTree Class
+class AVLTree {
     // var for the root of the tree
     Node * root ;
     /// the private functions that we will be recursive
@@ -75,9 +82,13 @@ class AVL {
            return node ;
        }
     // function to delete a node
-       Node * remove (Node * root , const int &id) ;
+       Node * remove (Node * root , const int &id) {
+
+       }
     // function to search a node
-       Node * search (Node * root , const int & id) ;
+       Node * search (Node * root , const int & id) {
+
+       }
     // function to get the height of node
     int getHeight(Node * node ) {
         if (node == nullptr) return  -1  ;
@@ -109,8 +120,6 @@ class AVL {
     Node *  rotateRight (Node * node ) {
         return node ;
     }
-    //helper function to balance the tree after inserting or deletion
-    void balanceTree () ;
     // function to delete all the nodes in the tree
     void deleteAllNodes (Node * r ) {
         if (r == nullptr) return ;
@@ -120,31 +129,129 @@ class AVL {
     }
 public :
     // the constructor
-    AVL() {
+    AVLTree() {
     root = NULL ;
 }
     /// The functions that must use the recursive functions
     // function to add new node
     void insertContact (const int & id , const string & name , const string & phone , const string & email) {
+        // first check if the id already exists
+        Node * isHere = search(root,id) ;
+        if (isHere != nullptr) {
+            cout << "The id already exist !!" <<endl;
+        }
+        // The id is unique
         Info info(name , phone ,email)  ;
-       root =  insert(root , id , info ) ;
+        root =  insert(root , id , info ) ;
     }
     //function to remove a node
-    void deleteContact (const int & id ) ;
+    void deleteContact (const int & id ) {
+
+    }
     // function for finding  a certain node
-    void searchContact(const  int & id  ) ;
+    void searchContact(const  int & id  ) {
+
+    }
     // function to display the current data in the tree
-    void listAllContacts () ;
+    void listAllContacts () {
+
+    }
     // function to display the tree structure
-    void displayTreeStructure() ;
+    void displayTreeStructure() {
+
+    }
     // the destructor
-    ~AVL () {
+    ~AVLTree () {
         // delete all the nodes using (deleteAllNodes function )
         deleteAllNodes (root ) ;
     }
 };
 int main() {
-    // getting the input from file
-    // the menu
-    return 0;
+    while (true) {
+        string fileName;
+        cout << "Please enter the file name (without extension): ";
+        cin >> fileName;
+        fileName += ".txt";
+
+        try {
+            ifstream fileInput(fileName);
+            if (!fileInput.is_open()) {
+                throw R"(Error: Could not open the file.)";
+            }
+
+            AVLTree currentTree;
+            string line;
+
+            while (getline(fileInput, line)) {
+                if (line.empty()) continue;
+
+                istringstream iss(line);
+                int choice;
+                if (!(iss >> choice)) continue;
+
+                switch (choice) {
+                    case 1: {
+                        int id;
+                        string name, phone, email;
+                        if (!(iss >> id >> name >> phone >> email)) continue;
+                        currentTree.insertContact(id, name, phone, email) ;
+                        cout << "inserting done " ;
+                        break;
+                    }
+                    case 2: {
+                        int id;
+                        if (!(iss >> id)) continue;
+                        currentTree.searchContact(id);
+                        break;
+                    }
+                    case 3: {
+                        int id;
+                        if (!(iss >> id)) continue;
+                        currentTree.deleteContact(id);
+                        break;
+                    }
+                    case 4: {
+                        currentTree.listAllContacts();
+                        break;
+                    }
+                    case 5: {
+                        currentTree.displayTreeStructure();
+                        break;
+                    }
+                    case 6: {
+                        cout << "Exiting..." << endl;
+                        return 0;
+                    }
+                    default: {
+                        cout << "Invalid choice found in the file." << endl;
+                        break;
+                    }
+                }
+            }
+
+            // Ask the user if they want to continue with another file
+            int continueOption;
+            cout << "Do you want to test another file? (1) Yes / (2) No: ";
+            // validate the input choice & if not valid throw exception
+            if (!(cin >> continueOption)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw R"(Error: Invalid input.)";
+            }
+            // The user choose to stop
+            if (continueOption == 2) {
+                cout << "Exiting..." << endl;
+                return 0;
+            }
+            // getting another file input
+            cout << "\n--- Restarting with another file ---\n\n";
+
+        }
+        // the catch statement for throw the errors
+        catch (const char* error) {
+            cout << error << endl;
+            cout << "Retrying...\n\n";
+        }
+    }
 }
+
