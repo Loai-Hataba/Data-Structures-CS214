@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <limits>
 using namespace std ;
 
 struct Patient {
@@ -33,7 +36,7 @@ class MaxHeap {
         if (left < n ) {
             if (arr [left ].severity > arr[largest].severity)  largest = left ;
             else if (arr [left ].severity == arr[largest].severity) {
-                if (arr [left ].arrival_time > arr[largest].arrival_time) {
+                if (arr [left ].arrival_time < arr[largest].arrival_time) {
                     largest = left ;
                 }
             }
@@ -42,7 +45,7 @@ class MaxHeap {
         if (right < n ) {
             if (arr [right ].severity > arr[largest].severity)  largest = right ;
             else if (arr [right ].severity == arr[largest].severity) {
-                if (arr [right ].arrival_time > arr[largest].arrival_time) {
+                if (arr [right ].arrival_time < arr[largest].arrival_time) {
                     largest = right ;
                 }
             }
@@ -68,10 +71,6 @@ class MaxHeap {
     void heap_sort (const int& n ) {
         //1- build the max heap
         build_max_heap(n ) ;
-        cout << "In the heap sort algo : " << endl;
-        for (int i = 0;  i < n ; i ++) {
-            cout << arr[i].name << " " ;
-        }
         cout << endl ;
         // Making a loop to sub the array size to keep the sorting in place
         for (int i = n -1 ; i > 0  ; i --) {
@@ -143,33 +142,78 @@ public :
     }
     cout << "]"<< endl ;
 }
+    bool isEmpty() const {
+        return size == 0 ;
+    }
     ~MaxHeap() {
         // Freeing up the allocated  memory
         delete [] arr ;
     }
 };
 int main () {
-    MaxHeap maxHeap ;
-    maxHeap.insert ( Patient ("Alice", 100, 10) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
+   while (true ) {
+       string fileName ;
+       // getting the file name from the user
+       cout << "Please enter the file name without any type format : " ;
+       cin >> fileName ;
+       // adding the text format for the file
+       fileName += ".txt" ;
+       try {
+           // open the file
+           ifstream fileInput (fileName);
+           if (!fileInput.is_open()) {
+               throw R"(Error : Opening the file  )";
+           }
+           MaxHeap maxHeap ; // declare the maxheap class
 
-    maxHeap.insert ( Patient ("Bob", 5 , 10) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
-    maxHeap.insert ( Patient ("alex", 20  , 10) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
-    maxHeap.insert ( Patient ("nek", 30  , 20) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
-    maxHeap.insert ( Patient ("sam", 40  , 20) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
-    maxHeap.insert ( Patient ("emma", 50  , 20) ) ;
-    cout << "In the main  : " ;
-    maxHeap.print_heap() ;
+           string patName ; // var for the patient name
+           int patSeverity = 0 ; // var for the patient severity
+           int patArrivalTime = 0 ; // an increasing var  simulate the arrival time
 
+           string line;
+           while (getline(fileInput, line)) {
+               istringstream iss(line);
+               if (!(iss >> patName >> patSeverity)) {
+                   // If input is invalid  skip line
+                   continue;
+               }
+               cout << "Inserting : " << patName;
+               // Insert the patient into the max heap
+               maxHeap.insert(Patient(patName, patSeverity, ++patArrivalTime));
+               // Print the current heap
+               maxHeap.print_heap();
+               cout << endl;
+           }
 
-    return 0 ;
+           // close the file
+           fileInput .close();
+           // The output "Treatment Order "
+           cout << endl  << endl ;
+           while (!maxHeap.isEmpty()) {
+               Patient currentPatient = maxHeap.extract_max();
+               cout << "Treating : " << currentPatient.name << endl; ;
+           }
+           cout << "\n\nAll patients has been treated successfully " << endl;
+           int choice = 0;
+           cout << "Do you want to test another file ?  ( (1) yes / (2)  no ):  "<<endl;;
+           cout << "Your choice(1 - 2) : ";
+           cin >> choice ;
+           if (!(cin >> choice)) {
+               cin.clear(); // clear error flag
+               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard input
+               throw R"(Error: Invalid input type for choice)";
+           }
+
+           if (choice == 2) {
+               cout << "Exiting ..." << endl ;
+               return 0 ;
+           }
+           cout << "Trying another file :) " <<endl <<endl ;
+       }
+       catch (const char* error ) {
+           cout << error << endl ;
+           cout << "trying another time  :( " <<endl <<endl;
+       }
+   }
 }
+
