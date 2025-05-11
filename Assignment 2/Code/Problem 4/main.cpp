@@ -177,6 +177,9 @@ int main () {
                    // If input is invalid  skip line
                    continue;
                }
+               if (patName.length() < 3 || patArrivalTime < 0 || patSeverity < 0 || patSeverity > 100  ) {
+                   continue;
+               }
                cout << "Inserting : " << patName;
                // Insert the patient into the max heap
                maxHeap.insert(Patient(patName, patSeverity, ++patArrivalTime));

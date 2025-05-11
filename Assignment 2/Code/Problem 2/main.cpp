@@ -4,9 +4,6 @@
 #include <sstream>
 using namespace std ;
 
-int getValidInt (ifstream fileInput ) {
-
-}
 
 struct Info {
     string name ;
@@ -33,7 +30,7 @@ struct Node {
     Node (const int & id , const Info & info ) {
         this->id = id ;
         this->info = info ;
-        left = right = NULL ;
+        left = right = nullptr ;
     }
 };
 
@@ -42,53 +39,7 @@ class AVLTree {
     // var for the root of the tree
     Node * root ;
     /// the private functions that we will be recursive
-    // function insert a node
-    ///Abdallah
-       Node * insert (Node * node , const int &  key , const Info &  info)   {
-           // base case if we have found the right place
-           if (node == nullptr) {
-              return ( new Node (key , info) ) ;
-           }
-           if (node -> id >  key ) {
-               insert (node -> left , key, info) ;
-           }
-           else if (node -> id < key ) {
-               insert (node -> right , key, info) ;
-           }
-           else {
-               return node ;
-           }
-           // getting the balance factor of the node
-           int factor = getBalanceFactor(node) ;
-           // there are 4 cases of unbalance nodes
-           // 1- Right - Right  case
-           if (factor < -1 && ( key > node -> right -> id ) ) {
-               return rotateLeft(node ) ;
-           }
-           // 2- Left-Left case
-           if (factor > 1 && (key < node ->left->id )) {
-               return rotateLeft(node) ;
-           }
-           // 3 Left-Right case
-           if (factor > 1 && (key > node->left->id)) {
-               node ->left = rotateLeft(node ->left) ;
-               return  ( rotateRight(node ) ) ;
-           }
-           // 4- Right - Left case
-           if (factor < -1  && (key < node->right->id)) {
-               node -> right = rotateRight (node->right) ;
-               return rotateLeft(node) ;
-           }
-           return node ;
-       }
-    // function to delete a node
-       Node * remove (Node * root , const int &id) {
 
-       }
-    // function to search a node
-       Node * search (Node * root , const int & id) {
-
-       }
     // function to get the height of node
     int getHeight(Node * node ) {
         if (node == nullptr) return  -1  ;
@@ -96,6 +47,7 @@ class AVLTree {
         int left = getHeight(node -> left) ;
         return (left > right ? left  +1    : right + 1    ) ;
     }
+
     // function to calculate the balance factor
     int getBalanceFactor (Node * node ) {
         if (node == nullptr) return 0;
@@ -103,6 +55,7 @@ class AVLTree {
         int right = getHeight(node -> right) ;
         return left - right ;
     }
+
     // function to rotate left
     ///Abdallah
     Node *  rotateLeft (Node * node ) {
@@ -118,8 +71,74 @@ class AVLTree {
     }
     // function to rotate right
     Node *  rotateRight (Node * node ) {
-        return node ;
+        // check if the node is null
+        if (node == nullptr) return nullptr;
+        // storing the values
+        Node* child = node->left;
+        Node* temp = child->right;
+        // the rotate logic
+        child->right = node;
+        node->left = temp;
+        return child;
     }
+
+    // function insert a node
+       Node * insert (Node * node , const int &  key , const Info &  info)   {
+           // base case if we have found the right place
+           if (node == nullptr) {
+              return ( new Node (key , info) ) ;
+           }
+           if (node -> id >  key ) {
+              node->left=  insert (node -> left , key, info) ;
+           }
+           else if (node -> id < key ) {
+               node->right = insert (node -> right , key, info) ;
+           }
+           else {
+               return node ;
+           }
+           // getting the balance factor of the node
+           int factor = getBalanceFactor(node) ;
+           // there are 4 cases of unbalance nodes
+           // 1- Right - Right  case
+           if (factor < -1 && ( key > node -> right -> id ) ) {
+               return rotateLeft(node ) ;
+           }
+           // 2- Left-Left case
+           if (factor > 1 && (key < node ->left->id )) {
+               return rotateRight(node) ;
+           }
+           // 3 Left-Right case
+           if (factor > 1 && (key > node->left->id)) {
+               node ->left = rotateLeft(node ->left) ;
+               return  ( rotateRight(node ) ) ;
+           }
+           // 4- Right - Left case
+           if (factor < -1  && (key < node->right->id)) {
+               node -> right = rotateRight (node->right) ;
+               return rotateLeft(node) ;
+           }
+           return node ;
+       }
+    // function to search a node
+       bool  search (Node * root , const int & key) {
+           // check if the node equal to null
+           if (root == nullptr) {
+               return false;
+           }
+           // check if we have found the key
+           if (root -> id == key) {
+               return true;
+           }
+           // then search in the left subtree
+           if (root -> id > key) {
+               return search(root -> left , key);
+           }
+           return search(root -> right , key);
+       }
+
+
+
     // function to delete all the nodes in the tree
     void deleteAllNodes (Node * r ) {
         if (r == nullptr) return ;
@@ -127,38 +146,45 @@ class AVLTree {
         deleteAllNodes (r->right) ;
         delete r ;
     }
+    // function to perform inorder traversal of the tree
+    void inorder(Node* root)
+       {
+           if (root != nullptr) {
+               inorder(root->left);
+               cout << root->id << " ";
+               inorder(root->right);
+           }
+       }
 public :
     // the constructor
     AVLTree() {
     root = NULL ;
 }
-    /// The functions that must use the recursive functions
+    // The functions that must use the recursive functions
     // function to add new node
     void insertContact (const int & id , const string & name , const string & phone , const string & email) {
         // first check if the id already exists
-        Node * isHere = search(root,id) ;
-        if (isHere != nullptr) {
+        bool  isHere = search(root,id) ;
+        if (isHere ) {
             cout << "The id already exist !!" <<endl;
+            return ;
         }
         // The id is unique
         Info info(name , phone ,email)  ;
         root =  insert(root , id , info ) ;
     }
-    //function to remove a node
-    void deleteContact (const int & id ) {
-
-    }
     // function for finding  a certain node
-    void searchContact(const  int & id  ) {
-
+    bool searchContact(const  int & id  ) {
+           return search(root,id) ;
     }
-    // function to display the current data in the tree
+    // function to List All Contacts (Sorted by ID)
     void listAllContacts () {
 
     }
     // function to display the tree structure
     void displayTreeStructure() {
 
+           inorder(root) ;
     }
     // the destructor
     ~AVLTree () {
@@ -188,37 +214,36 @@ int main() {
                 istringstream iss(line);
                 int choice;
                 if (!(iss >> choice)) continue;
-
+                cout << choice << endl ;
                 switch (choice) {
                     case 1: {
                         int id;
                         string name, phone, email;
                         if (!(iss >> id >> name >> phone >> email)) continue;
-                        currentTree.insertContact(id, name, phone, email) ;
                         cout << "inserting done " ;
+                        currentTree.insertContact(id, name, phone, email) ;
                         break;
                     }
                     case 2: {
                         int id;
                         if (!(iss >> id)) continue;
-                        currentTree.searchContact(id);
+                        if ( currentTree.searchContact(id) ) {
+                            cout << "The id :  " << id << " is found !!" <<endl ;
+                        }
+                        else {
+                            cout << "The id : " << id << " is NOT FOUND !!" <<endl ;
+                        }
                         break;
                     }
                     case 3: {
-                        int id;
-                        if (!(iss >> id)) continue;
-                        currentTree.deleteContact(id);
-                        break;
-                    }
-                    case 4: {
                         currentTree.listAllContacts();
                         break;
                     }
-                    case 5: {
+                    case 4: {
                         currentTree.displayTreeStructure();
                         break;
                     }
-                    case 6: {
+                    case 5: {
                         cout << "Exiting..." << endl;
                         return 0;
                     }
