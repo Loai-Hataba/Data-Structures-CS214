@@ -155,6 +155,18 @@ class AVLTree {
                inorder(root->right);
            }
        }
+       //function to print all the contacts stored in the AVL tree
+    void inorderDetailed(Node* root) {
+        if (root != nullptr) {
+            inorderDetailed(root->left);
+            cout << "ID: " << root->id
+                 << ", Name: " << root->info.name
+                 << ", Phone: " << root->info.phone
+                 << ", Email: " << root->info.email << endl;
+            inorderDetailed(root->right);
+        }
+    }
+
 public :
     // the constructor
     AVLTree() {
@@ -174,12 +186,23 @@ public :
         root =  insert(root , id , info ) ;
     }
     // function for finding  a certain node
-    bool searchContact(const  int & id  ) {
-           return search(root,id) ;
+    void searchContact(const int& id) {
+        Node* result = search(root, id);
+        if (result == nullptr) {
+            cout << "Contact not found." << endl;
+        } else {
+            cout << "Contact found:" << endl;
+            cout << "ID: " << result->id << endl;
+            cout << "Name: " << result->info.name << endl;
+            cout << "Phone: " << result->info.phone << endl;
+            cout << "Email: " << result->info.email << endl;
+        }
     }
+
     // function to List All Contacts (Sorted by ID)
     void listAllContacts () {
-
+        cout << "Contacts in Address Book (sorted by ID):" << endl;
+        inorderDetailed(root);
     }
     // function to display the tree structure
     void displayTreeStructure() {
@@ -227,14 +250,10 @@ int main() {
                     case 2: {
                         int id;
                         if (!(iss >> id)) continue;
-                        if ( currentTree.searchContact(id) ) {
-                            cout << "The id :  " << id << " is found !!" <<endl ;
-                        }
-                        else {
-                            cout << "The id : " << id << " is NOT FOUND !!" <<endl ;
-                        }
+                        currentTree.searchContact(id);
                         break;
                     }
+
                     case 3: {
                         currentTree.listAllContacts();
                         break;
