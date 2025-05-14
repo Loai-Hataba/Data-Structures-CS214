@@ -244,7 +244,7 @@ public:
     // function to display the tree structure
     void displayTreeStructure()
     {
-        cout << "TODO : implement the tree Structure " << endl; 
+        cout << "TODO : implement the tree Structure " << endl;
     }
     // the destructor
     ~AVLTree()
