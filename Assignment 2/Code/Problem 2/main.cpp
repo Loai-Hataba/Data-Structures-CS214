@@ -256,10 +256,12 @@ public:
 
         for (size_t i = 1; i <= height  ; i++)
         {
+            cout << string(((height-i+1)*4)+1, ' ');
             printLevel(root, i);
             cout << endl;
             // print the branches only when the level is not the last one
             if (i < height) {
+                cout << string(((height-i+1)*4), ' ');
                 printBranches(root, i);
                 cout << endl;
             }
@@ -267,21 +269,22 @@ public:
         
     }
     // function to print the tree level by level
-    void printLevel(Node * root , int  level)
+    void printLevel(Node* root, int  level)
     {
         if (root == nullptr)
             return;
         if (level == 1)
-            cout << root->id << "   ";
+            cout<<root->id << "   ";
 
         else if (level > 1)
         {
+            cout<<" ";
             printLevel(root->left, level - 1);
             printLevel(root->right, level - 1);
         }
     }
     // function to print the branches of the tree 
-    void printBranches(Node * root , int level )
+    void printBranches(Node* root, int level)
     {
      if (root == nullptr) return ; 
      else if (level == 1) {
@@ -293,6 +296,7 @@ public:
 
      }
      else if (level > 1) {
+         cout<<" ";
         printBranches(root->left, level - 1);
         printBranches(root->right, level - 1);
      }
