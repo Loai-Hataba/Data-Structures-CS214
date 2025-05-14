@@ -240,7 +240,7 @@ public:
         cout << "Contacts in Address Book (sorted by ID):" << endl;
         inorderDetailed(root);
         cout << endl;
-    }\
+    }
     //? Done 
     // function to display the tree structure
     void displayTreeStructure()
@@ -378,18 +378,24 @@ int main()
                 }
             }
 
-            fileInput.close(); // Add this before asking for another file
-
-            // Ask the user if they want to continue with another file
+             fileInput.close();
             int continueOption;
-            cout << "Do you want to test another file? (1) Yes / (2) No: ";
             // validate the input choice & if not valid throw exception
-            if (!(cin >> continueOption))
+            while (true)
             {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw R"(Error: Invalid input.)";
+                
+                // Ask the user if they want to continue with another file
+                cout << "Do you want to test another file? (1) Yes / (2) No: ";
+                if (!(cin >> continueOption))
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Error: Invalid input." << endl;
+                    continue;
+                }
+                break;
             }
+
             // The user choose to stop
             if (continueOption == 2)
             {
@@ -399,7 +405,6 @@ int main()
             // getting another file input
             cout << "\n--- Restarting with another file ---\n\n";
         }
-        // the catch statement for throw the errors
         catch (const char *error)
         {
             cout << error << endl;

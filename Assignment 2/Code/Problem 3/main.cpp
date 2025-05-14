@@ -1,90 +1,116 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+#include <limits>
 using namespace std;
 
-int main(){
-    ifstream infile("test_1.txt");
-    if (!infile.is_open()) {
-        cout << "Error opening input File\n";
-        return 1;
-    }
-
-    string line1;
-    getline(infile, line1); //only first line
-
-    stringstream ss(line1);
-    int capacity = 4;
-    int size = 0;
-    int* arr = new int[capacity];
-
-    int x;
-    while (ss >> x) {
-        if (size == capacity) {
-            capacity *= 2;
-            int* newArr = new int[capacity];
-
-            for (int i = 0; i < size; ++i) {
-                newArr[i] = arr[i];
+int main()
+{
+    while (true)
+    {
+        string fileName;
+        cout << "Please enter the file name (without extension): ";
+        cin >> fileName;
+        fileName += ".txt";
+        try
+        {
+            ifstream infile(fileName);
+            if (!infile.is_open())
+            {
+                throw runtime_error("Error opening input File");
             }
+            string line1;
+            getline(infile, line1); // only first line
 
-            delete[] arr;
-            arr = newArr;
-        }
+            stringstream ss(line1);
+            int capacity = 4;
+            int size = 0;
+            int *arr = new int[capacity];
 
-        arr[size++] = x;
-    }
+            int x;
+            while (ss >> x)
+            {
+                if (size == capacity)
+                {
+                    capacity *= 2;
+                    int *newArr = new int[capacity];
 
-    int k;
-    infile>>k;
+                    for (int i = 0; i < size; ++i)
+                    {
+                        newArr[i] = arr[i];
+                    }
 
-//    int cntToK = 0;
-    int cntOfSub = 0;
-    bool done = true;
-//    bool inArow = false;    //subarr begins
-    for (int i = 0; i < size; ++i) {
-        if (arr[i] == 0){       //only flip when i see a zero
-            for (int j = 0; j < k; ++j) {
-                if (i+j == size){       // when its a zero and i want to flip to k but array out of bounds so cant.
-                    done = false;
-                    break;
+                    delete[] arr;
+                    arr = newArr;
                 }
-                arr[i+j] = !arr[i+j];
+
+                arr[size++] = x;
             }
-            cntOfSub++;
+            infile.close();
+            int k;
+            infile >> k;
+
+            //    int cntToK = 0;
+            int cntOfSub = 0;
+            bool done = true;
+            //    bool inArow = false;    //subarr begins
+            for (int i = 0; i < size; ++i)
+            {
+                if (arr[i] == 0)
+                {
+                    for (int j = 0; j < k; ++j)
+                    {
+                        if (i + j == size)
+                        {
+                            done = false;
+                            break;
+                        }
+                        arr[i + j] = !arr[i + j];
+                    }
+                    cntOfSub++;
+                }
+                else
+                    continue;
+            }
+
+            if (!done)
+            {
+                cout << "-1" << endl;
+            }
+            else
+            {
+                cout << cntOfSub << endl;
+            }
+             int continueOption;
+            // validate the input choice & if not valid throw exception
+            while (true)
+            {
+                
+                // Ask the user if they want to continue with another file
+                cout << "Do you want to test another file? (1) Yes / (2) No: ";
+                if (!(cin >> continueOption))
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Error: Invalid input." << endl;
+                    continue;
+                }
+                break;
+            }
+
+            // The user choose to stop
+            if (continueOption == 2)
+            {
+                cout << "Exiting..." << endl;
+                return 0;
+            }
+            // getting another file input
+            cout << "\n--- Restarting with another file ---\n\n";
         }
-        else continue;
-//        if (inArow){
-//            arr[j] =!arr[j];
-//            cntToK++;
-//        }
-//        else if(arr[j] == 1){
-//            continue;
-//        }
-//        if (cntToK > k){
-//            cntToK = 0;
-//        }
-//        if (arr[j] == 0 && cntToK < k){         // count zeros to k
-//            cntToK++;
-//            inArow = true;
-//        }
-//        if (arr[j] == 0 && cntToK == k){
-//            cntToK = 0;
-//            cntOfSub++;
-//            inArow = false;
-//        }
-//        if(arr[j] == 1 && cntToK <= k && inArow) {
-//            done = false;
-//            break;
-//        }
+        catch (const exception &e)
+        {
+            cerr << e.what() << '\n';
+        }
     }
-
-    if (!done){
-        cout<<"-1"<<endl;
-    }
-    else {
-        cout<<cntOfSub<<endl;
-    }
-
+    
 }

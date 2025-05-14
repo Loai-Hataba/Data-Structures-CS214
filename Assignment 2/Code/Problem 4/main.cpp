@@ -188,8 +188,6 @@ int main () {
                cout << endl;
            }
 
-           // close the file
-           fileInput .close();
            // The output "Treatment Order "
            cout << endl  << endl ;
            while (!maxHeap.isEmpty()) {
@@ -197,26 +195,38 @@ int main () {
                cout << "Treating : " << currentPatient.name << endl; ;
            }
            cout << "\n\nAll patients has been treated successfully " << endl;
-           int choice = 0;
-           cout << "Do you want to test another file ?  ( (1) yes / (2)  no ):  "<<endl;;
-           cout << "Your choice(1 - 2) : ";
-           cin >> choice ;
-           if (!(cin >> choice)) {
-               cin.clear(); // clear error flag
-               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard input
-               throw R"(Error: Invalid input type for choice)";
-           }
+             fileInput.close();
+            int continueOption;
+            // validate the input choice & if not valid throw exception
+            while (true)
+            {
+                
+                // Ask the user if they want to continue with another file
+                cout << "Do you want to test another file? (1) Yes / (2) No: ";
+                if (!(cin >> continueOption))
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Error: Invalid input." << endl;
+                    continue;
+                }
+                break;
+            }
 
-           if (choice == 2) {
-               cout << "Exiting ..." << endl ;
-               return 0 ;
-           }
-           cout << "Trying another file :) " <<endl <<endl ;
-       }
-       catch (const char* error ) {
-           cout << error << endl ;
-           cout << "trying another time  :( " <<endl <<endl;
-       }
+            // The user choose to stop
+            if (continueOption == 2)
+            {
+                cout << "Exiting..." << endl;
+                return 0;
+            }
+            // getting another file input
+            cout << "\n--- Restarting with another file ---\n\n";
+        }
+        catch (const char *error)
+        {
+            cout << error << endl;
+            cout << "Retrying...\n\n";
+        }
    }
 }
 

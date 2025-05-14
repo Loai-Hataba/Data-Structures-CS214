@@ -13,13 +13,14 @@ class Stack
         string data;
         Node *next;
         // Parameterized constructor
-        Node(const string& value) {
+        Node(const string &value)
+        {
             this->data = value;
-           this-> next = nullptr;
+            this->next = nullptr;
         }
     };
 
-    // The top of the stack 
+    // The top of the stack
     Node *top;
 
 public:
@@ -29,38 +30,39 @@ public:
         top = nullptr;
     }
 
-
     // Copy constructor
-    Stack(const Stack &other) 
+    Stack(const Stack &other)
     {
         // Initialize empty stack if other is empty
-        if (other.isEmpty()) {
+        if (other.isEmpty())
+        {
             top = nullptr;
             return;
         }
-      
+
         // Copy first node
-        Node* otherCurrent = other.top;
+        Node *otherCurrent = other.top;
         this->top = new Node(otherCurrent->data);
-        
+
         // Keep track of last node in new stack
-        Node* current = this-> top;
+        Node *current = this->top;
         otherCurrent = otherCurrent->next;
-        
+
         // Copy remaining nodes
-        while (otherCurrent != nullptr) {
+        while (otherCurrent != nullptr)
+        {
             current->next = new Node(otherCurrent->data);
             current = current->next;
             otherCurrent = otherCurrent->next;
         }
     }
 
-    
     // function to push an element onto the stack
     void push(const string &item)
     {
         Node *newElement = new Node(item);
-        if (top == nullptr  ) {
+        if (top == nullptr)
+        {
             top = newElement;
             return;
         }
@@ -68,18 +70,18 @@ public:
         top = newElement;
     }
 
-   // function to pop an element from the stack
+    // function to pop an element from the stack
     string pop()
     {
         if (top == nullptr)
         {
             return "";
         }
-            string item = top->data; // Get the data from top node
-            Node *temp = top;        // Store the top node to delete it
-            top = top->next;         // Move top to next node
-            delete temp;             // Free the memory
-            return item;
+        string item = top->data; // Get the data from top node
+        Node *temp = top;        // Store the top node to delete it
+        top = top->next;         // Move top to next node
+        delete temp;             // Free the memory
+        return item;
     }
 
     // function to check if the stack is empty
@@ -113,17 +115,17 @@ class BrowserHistory
     static void printStack(const Stack &stack)
     {
 
-        Stack temp(stack);       
+        Stack temp(stack);
         cout << "[";
         while (true)
         {
-           
+
             string url = temp.pop();
-            if(url.empty())  break;
-             cout << "\" " << url << "\",";
+            if (url.empty())
+                break;
+            cout << "\" " << url << "\",";
         }
         cout << "]" << endl;
-    
     }
 
 public:
@@ -135,19 +137,17 @@ public:
 
     // The visit function takes a URL as an argument and pushes the current URL onto the back stack
     // and clears the forward stack
-    void visit(const string & url)
+    void visit(const string &url)
     {
 
         currentUrl = url;
         backStack.push(currentUrl);
-
 
         // empty the forward stack
         while (!forwardStack.isEmpty())
         {
             forwardStack.pop();
         }
-
     }
 
     // The goBack function pops the top URL from the back stack and pushes the current URL onto the forward stack
@@ -170,7 +170,7 @@ public:
         forwardStack.push(previousUrl);
 
         currentUrl = backStack.pop();
-        backStack.push(currentUrl) ;
+        backStack.push(currentUrl);
 
         return currentUrl;
     }
@@ -277,16 +277,23 @@ int main()
             }
 
             fileInput.close();
-            // Ask the user if they want to continue with another file
             int continueOption;
-            cout << "Do you want to test another file? (1) Yes / (2) No: ";
             // validate the input choice & if not valid throw exception
-            if (!(cin >> continueOption))
+            while (true)
             {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw R"(Error: Invalid input.)";
+                
+                // Ask the user if they want to continue with another file
+                cout << "Do you want to test another file? (1) Yes / (2) No: ";
+                if (!(cin >> continueOption))
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Error: Invalid input." << endl;
+                    continue;
+                }
+                break;
             }
+
             // The user choose to stop
             if (continueOption == 2)
             {
