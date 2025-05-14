@@ -8,25 +8,85 @@ using namespace std;
 //! First we need to make the stack data structure
 class Stack
 {
-private:
     struct Node
     {
         string data;
-        Node *next; // Pointer to the next node
-        // Constructor to initialize the node
-        Node() : data(""), next(nullptr) {}
+        Node *next;
+        // Parameterized constructor
+        Node(const string& value) {
+            this->data = value;
+           this-> next = nullptr;
+        }
     };
 
+    // The top of the stack 
     Node *top;
 
 public:
-
     // Constructor to initialize the stack
     Stack()
     {
         top = nullptr;
     }
 
+
+    // Copy constructor
+    Stack(const Stack &other) 
+    {
+        // Initialize empty stack if other is empty
+        if (other.isEmpty()) {
+            top = nullptr;
+            return;
+        }
+      
+        // Copy first node
+        Node* otherCurrent = other.top;
+        this->top = new Node(otherCurrent->data);
+        
+        // Keep track of last node in new stack
+        Node* current = this-> top;
+        otherCurrent = otherCurrent->next;
+        
+        // Copy remaining nodes
+        while (otherCurrent != nullptr) {
+            current->next = new Node(otherCurrent->data);
+            current = current->next;
+            otherCurrent = otherCurrent->next;
+        }
+    }
+
+    
+    // function to push an element onto the stack
+    void push(const string &item)
+    {
+        Node *newElement = new Node(item);
+        if (top == nullptr  ) {
+            top = newElement;
+            return;
+        }
+        newElement->next = top;
+        top = newElement;
+    }
+
+   // function to pop an element from the stack
+    string pop()
+    {
+        if (top == nullptr)
+        {
+            return "";
+        }
+            string item = top->data; // Get the data from top node
+            Node *temp = top;        // Store the top node to delete it
+            top = top->next;         // Move top to next node
+            delete temp;             // Free the memory
+            return item;
+    }
+
+    // function to check if the stack is empty
+    bool isEmpty() const
+    {
+        return (top == nullptr);
+    }
     // Destructor to free the memory
     ~Stack()
     {
@@ -37,71 +97,37 @@ public:
             delete temp;
         }
     }
-
-    // Push a new element onto the stack
-    // The function takes a string as an argument and creates a new node with that string
-    void push(const string &item)
-    {
-
-        Node *newElement = new Node;
-        newElement->data = item;
-        newElement->next = top;
-        top = newElement;
-    }
-
-    // Pop the top element from the stack
-    // The function returns the string data of the popped node
-    string pop()
-    {
-        if (top == nullptr)
-        {
-            cout << "Stack is empty" << endl;
-            return "";
-        }
-        else
-        {
-            string item = top->data; // Get the data from top node
-            Node *temp = top;        // Store the top node to delete it
-            top = top->next;         // Move top to next node
-            delete temp;             // Free the memory
-            return item;
-        }
-    }
-   
-    // function to check if the stack is empty
-    // The function returns true if the stack is empty, false otherwise
-    bool isEmpty() const
-    {
-        return (top == nullptr);
-    }
-    // function to get the top element of the stack
-    // The function returns the string data of the top node
-    void printStack()
-    {
-        Node *current = top;
-        cout << "[";
-        while (current != nullptr)
-        {
-            cout << "\"" << current->data << "\" , ";
-            current = current->next;
-        }
-        cout << "]" << endl;
-    }
 };
 // Now the BrowserHistory class
 class BrowserHistory
 {
-private:
     // Two stacks to keep track of the back and forward history
     // The back stack stores the URLs visited before the current URL
     // The forward stack stores the URLs visited after the current URL
+
     Stack backStack;
     Stack forwardStack;
     string currentUrl;
 
-public:
+    // function to print the stack
+    static void printStack(const Stack &stack)
+    {
 
-    // Constructor to initialize the browser history 
+        Stack temp(stack);       
+        cout << "[";
+        while (true)
+        {
+           
+            string url = temp.pop();
+            if(url.empty())  break;
+             cout << "\" " << url << "\",";
+        }
+        cout << "]" << endl;
+    
+    }
+
+public:
+    // Constructor to initialize the browser history
     BrowserHistory()
     {
         currentUrl = "";
@@ -109,16 +135,19 @@ public:
 
     // The visit function takes a URL as an argument and pushes the current URL onto the back stack
     // and clears the forward stack
-    void visit(string url)
+    void visit(const string & url)
     {
-        if (!currentUrl.empty()) {  // Only push if currentUrl is not empty
-            backStack.push(currentUrl);
-        }
+
         currentUrl = url;
+        backStack.push(currentUrl);
+
+
+        // empty the forward stack
         while (!forwardStack.isEmpty())
         {
             forwardStack.pop();
         }
+
     }
 
     // The goBack function pops the top URL from the back stack and pushes the current URL onto the forward stack
@@ -127,17 +156,22 @@ public:
     {
         if (backStack.isEmpty())
         {
-            cout << "No previous URL" << endl;
-            return currentUrl;
-        }
-        if (currentUrl == "")
-        {
-           cout << "No current URL" << endl;
+            cout << "No previous URL to go back " << endl
+                 << endl;
             return "";
         }
+        if (currentUrl.empty())
+        {
+            cout << "No current URL" << endl;
+            return "";
+        }
+
         string previousUrl = backStack.pop();
-        forwardStack.push(currentUrl);
-        currentUrl = previousUrl;
+        forwardStack.push(previousUrl);
+
+        currentUrl = backStack.pop();
+        backStack.push(currentUrl) ;
+
         return currentUrl;
     }
 
@@ -147,17 +181,18 @@ public:
     {
         if (forwardStack.isEmpty())
         {
-            cout << "No forward URL" << endl;
+            cout << "No forward URL to go forward" << endl
+                 << endl;
             return "";
         }
-        if (currentUrl == "")
+        if (currentUrl.empty())
         {
             cout << "No current URL" << endl;
             return "";
         }
-        
+
         string nextUrl = forwardStack.pop();
-        backStack.push(currentUrl);
+        backStack.push(nextUrl);
         currentUrl = nextUrl;
         return currentUrl;
     }
@@ -168,9 +203,9 @@ public:
     void printHistory()
     {
         cout << "Back Stack: ";
-        backStack.printStack();
+        printStack(backStack);
         cout << "Forward Stack: ";
-        forwardStack.printStack();
+        printStack(forwardStack);
         cout << "Current URL: " << currentUrl << endl
              << endl;
     }
@@ -191,7 +226,7 @@ int main()
             {
                 throw R"(Error: Could not open the file.)";
             }
-            BrowserHistory browser ;
+            BrowserHistory browser;
             string line;
             while (getline(fileInput, line))
             {
@@ -209,21 +244,24 @@ int main()
                     if (!(iss >> url))
                         continue;
                     browser.visit(url);
-                    cout << "Visited: " << url << endl;
+                    cout << "Visited: " << url << endl
+                         << endl;
                     break;
                 }
                 case 2:
                 {
                     string url = browser.goBack();
                     if (!url.empty())
-                        cout << "Went back to: " << url << endl;
+                        cout << "Went back to: " << url << endl
+                             << endl;
                     break;
                 }
                 case 3:
                 {
                     string url = browser.goForward();
                     if (!url.empty())
-                        cout << "Went forward to: " << url << endl;
+                        cout << "Went forward to: " << url << endl
+                             << endl;
                     break;
                 }
                 case 4:
@@ -232,13 +270,14 @@ int main()
                     break;
                 }
                 default:
-                    cout << "Invalid choice found in the file " << endl;
+                    cout << "Invalid choice found in the file " << endl
+                         << endl;
                     break;
                 }
             }
 
-           fileInput.close(); 
-           // Ask the user if they want to continue with another file
+            fileInput.close();
+            // Ask the user if they want to continue with another file
             int continueOption;
             cout << "Do you want to test another file? (1) Yes / (2) No: ";
             // validate the input choice & if not valid throw exception
@@ -259,12 +298,10 @@ int main()
         }
         catch (const char *error)
         {
-           cout << error << endl;
+            cout << error << endl;
             cout << "Retrying...\n\n";
         }
     }
 
     return 0;
 }
-
-
