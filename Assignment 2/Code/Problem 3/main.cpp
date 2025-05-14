@@ -44,9 +44,9 @@ int main(){
     bool done = true;
 //    bool inArow = false;    //subarr begins
     for (int i = 0; i < size; ++i) {
-        if (arr[i] == 0){
+        if (arr[i] == 0){       //only flip when i see a zero
             for (int j = 0; j < k; ++j) {
-                if (i+j == size){
+                if (i+j == size){       // when its a zero and i want to flip to k but array out of bounds so cant.
                     done = false;
                     break;
                 }
