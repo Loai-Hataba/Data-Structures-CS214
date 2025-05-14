@@ -48,7 +48,7 @@ class AVLTree
     int getHeight(Node *node)
     {
         if (node == nullptr)
-            return -1;
+            return 0;
         int right = getHeight(node->right);
         int left = getHeight(node->left);
         return (left > right ? left + 1 : right + 1);
@@ -240,11 +240,64 @@ public:
         cout << "Contacts in Address Book (sorted by ID):" << endl;
         inorderDetailed(root);
         cout << endl;
-    }
+    }\
+    //? Done 
     // function to display the tree structure
     void displayTreeStructure()
     {
-        cout << "TODO : implement the tree Structure " << endl; 
+        
+        if(root == nullptr)
+        {
+            cout << "The tree is empty." << endl;
+            return;
+        }
+        cout << "Current tree structure:" << endl;
+        int height = getHeight(root);
+
+        for (size_t i = 1; i <= height  ; i++)
+        {
+            printLevel(root, i);
+            cout << endl;
+            // print the branches only when the level is not the last one
+            if (i < height) {
+                printBranches(root, i);
+                cout << endl;
+            }
+        }
+        
+    }
+    // function to print the tree level by level
+    void printLevel(Node * root , int  level)
+    {
+        if (root == nullptr)
+            return;
+        if (level == 1)
+            cout << root->id << "   ";
+
+        else if (level > 1)
+        {
+            printLevel(root->left, level - 1);
+            printLevel(root->right, level - 1);
+        }
+    }
+    // function to print the branches of the tree 
+    void printBranches(Node * root , int level )
+    {
+     if (root == nullptr) return ; 
+     else if (level == 1) {
+          // Adjust spacing to match node spacing
+        if (root->left && root->right) cout << "/  \\ "; 
+        else if (root->left)  cout << "/    "; 
+        else if (root->right) cout << "   \\ "; 
+        else  cout << "     "; 
+
+     }
+     else if (level > 1) {
+        printBranches(root->left, level - 1);
+        printBranches(root->right, level - 1);
+     }
+
+
     }
     // the destructor
     ~AVLTree()
