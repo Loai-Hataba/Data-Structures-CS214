@@ -46,9 +46,9 @@ int main()
 
                 arr[size++] = x;
             }
-            infile.close();
             int k;
             infile >> k;
+            infile.close();
 
             //    int cntToK = 0;
             int cntOfSub = 0;
@@ -60,7 +60,7 @@ int main()
                 {
                     for (int j = 0; j < k; ++j)
                     {
-                        if (i + j == size)
+                        if (i + j >= size)
                         {
                             done = false;
                             break;
@@ -69,8 +69,7 @@ int main()
                     }
                     cntOfSub++;
                 }
-                else
-                    continue;
+                else continue;
             }
 
             if (!done)
