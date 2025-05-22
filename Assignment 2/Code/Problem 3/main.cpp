@@ -96,6 +96,7 @@ int main()
                 }
                 break;
             }
+            delete[] arr;
 
             // The user choose to stop
             if (continueOption == 2)
