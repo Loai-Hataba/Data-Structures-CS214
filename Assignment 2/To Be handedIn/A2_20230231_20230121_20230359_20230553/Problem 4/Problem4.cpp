@@ -5,6 +5,7 @@
 using namespace std ;
 
 struct Patient {
+
     string name ;
     int severity  ;
     int arrival_time;
@@ -67,6 +68,7 @@ class MaxHeap {
             max_heapify(i , n);
         }
     }
+    
     // function for applying heap sort algo on the heap
     void heap_sort (const int& n ) {
         //1- build the max heap

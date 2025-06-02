@@ -21,6 +21,7 @@ struct Info
         this->email = email;
     }
 };
+
 // Making the Node struct
 struct Node
 {
@@ -45,33 +46,45 @@ class AVLTree
     /// the private functions that we will be recursive
 
     // function to get the height of node
+    // Hossam 
     int getHeight(Node *node)
     {
         if (node == nullptr)
             return 0;
+
         int right = getHeight(node->right);
+
         int left = getHeight(node->left);
-        return (left > right ? left + 1 : right + 1);
+
+        return ((left > right) ? left + 1 : right + 1);
     }
 
     // function to calculate the balance factor
+    // loai 
     int getBalanceFactor(Node *node)
     {
-        if (node == nullptr)
-            return 0;
+        if (node == nullptr)    return 0;
+
         int left = getHeight(node->left);
+
         int right = getHeight(node->right);
-        return left - right;
+
+        return left - right; 
+         // -1 , 0 , 1 
     }
+
 
     // function to rotate left
     Node *rotateLeft(Node *node)
     {
+        // r- r 
         // check if the node is null
         if (node == nullptr)
             return nullptr;
+
         // storing the values
         Node *child = node->right;
+
         Node *temp = child->left;
         // the rotate logic :
         child->left = node;
@@ -140,6 +153,7 @@ class AVLTree
         }
         return node;
     }
+   // hisham 
     // function to search a node
     Node *search(Node *root, const int &key)
     {
@@ -171,6 +185,7 @@ class AVLTree
         delete r;
     }
 
+    // hisham 
     // function to print all the contacts stored in the AVL tree
     void inorderDetailed(Node *root)
     {
@@ -256,6 +271,7 @@ public:
 
         for (size_t i = 1; i <= height  ; i++)
         {
+            // spacing for the nodes
             cout << string(((height-i+1)*4)+1, ' ');
             printLevel(root, i);
             cout << endl;
@@ -268,7 +284,8 @@ public:
         }
         
     }
-    // function to print the tree level by level
+    // function to print the tree level by level 
+    // bfs 
     void printLevel(Node* root, int  level)
     {
         if (root == nullptr)
@@ -286,6 +303,7 @@ public:
     // function to print the branches of the tree 
     void printBranches(Node* root, int level)
     {
+        
      if (root == nullptr) return ; 
      else if (level == 1) {
           // Adjust spacing to match node spacing

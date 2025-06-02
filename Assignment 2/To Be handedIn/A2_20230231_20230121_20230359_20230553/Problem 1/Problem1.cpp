@@ -6,6 +6,7 @@
 using namespace std;
 
 //! First we need to make the stack data structure
+// Abdallah 
 class Stack
 {
     struct Node
@@ -111,6 +112,7 @@ class BrowserHistory
     Stack forwardStack;
     string currentUrl;
 
+    // abdallah
     // function to print the stack
     static void printStack(const Stack &stack)
     {
@@ -135,8 +137,9 @@ public:
         currentUrl = "";
     }
 
+    
     // The visit function takes a URL as an argument and pushes the current URL onto the back stack
-    // and clears the forward stack
+    // and clears the forward stack // ? hisham 
     void visit(const string &url)
     {
 
@@ -148,10 +151,12 @@ public:
         {
             forwardStack.pop();
         }
+
     }
 
     // The goBack function pops the top URL from the back stack and pushes the current URL onto the forward stack
     // The function returns the previous URL if available, otherwise it returns the current URL
+    // hataba 
     string goBack()
     {
         if (backStack.isEmpty())
@@ -176,7 +181,8 @@ public:
     }
 
     // The goForward function pops the top URL from the forward stack and pushes the current URL onto the back stack
-    // The function returns the next URL if available, otherwise it returns the current URL
+    // The function returns the next URL if available, otherwise it returns the current URL 
+    // hossam 
     string goForward()
     {
         if (forwardStack.isEmpty())
@@ -192,8 +198,11 @@ public:
         }
 
         string nextUrl = forwardStack.pop();
+
         backStack.push(nextUrl);
+
         currentUrl = nextUrl;
+        
         return currentUrl;
     }
 
